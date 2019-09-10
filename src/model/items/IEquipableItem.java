@@ -21,10 +21,14 @@ public interface IEquipableItem {
    */
   void equipTo(IUnit unit);
 
+
   /**
    * @return the unit that has currently equipped this item
    */
   IUnit getOwner();
+
+
+ void changeOwner(IUnit unit);
 
   /**
    * @return the name of the item

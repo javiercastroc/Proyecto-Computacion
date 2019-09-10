@@ -38,11 +38,15 @@ public interface IUnit {
    */
   IEquipableItem getEquippedItem();
 
+  public void giveItem(final IEquipableItem item, IUnit unit);
+
   /**
    * @param item
    *     the item to be equipped
    */
   void setEquippedItem(IEquipableItem item);
+
+  public void addItem(IEquipableItem item);
 
   /**
    * @return the current location of the unit
