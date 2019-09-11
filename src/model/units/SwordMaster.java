@@ -43,4 +43,17 @@ public class SwordMaster extends AbstractUnit {
   @Override
   public void equipSword(final Sword sword) {
     equippedItem=sword; }
+
+  @Override
+  public void receiveAxeAttack(Axe attack) {
+    if (getEquippedItem() != null) {
+      receiveResistantAttack(attack);
+    }
+  }
+  @Override
+  public void receiveSpearAttack(Spear attack) {
+    if (getEquippedItem() != null) {
+      receiveWeaknessAttack(attack);
+    }
+  }
 }

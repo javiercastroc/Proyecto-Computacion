@@ -5,7 +5,8 @@ import static java.lang.Math.min;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import model.items.IEquipableItem;
+
+import model.items.*;
 import model.map.Location;
 
 /**
@@ -21,7 +22,7 @@ import model.map.Location;
 public abstract class AbstractUnit implements IUnit {
 
   protected final List<IEquipableItem> items = new ArrayList<>();
-  private final int currentHitPoints;
+  private int currentHitPoints;
   private final int movement;
   private final int maxItems;
   protected IEquipableItem equippedItem;
@@ -87,7 +88,7 @@ public abstract class AbstractUnit implements IUnit {
 
     @Override
     public void equipItem(final IEquipableItem item) {
-      item.equipTo(this);
+        item.equipTo(this);
     }
 
   public void addItem(IEquipableItem item) {
@@ -119,4 +120,48 @@ public abstract class AbstractUnit implements IUnit {
       setLocation(targetLocation);
     }
   }
+  @Override
+  public void attack(IUnit other) {
+      if(getEquippedItem()!=null){
+        getEquippedItem().attack(other);}
+  }
+
+  protected void receiveAttack(IEquipableItem attack) {
+        this.currentHitPoints -= attack.getPower();
+    }
+
+    @Override
+    public void receiveAxeAttack(Axe attack){
+        receiveAttack(attack);
+    }
+
+    @Override
+    public void receiveBowAttack(Bow attack){
+        receiveAttack(attack);
+    }
+
+    @Override
+    public void receiveSpearAttack(Spear attack){
+        receiveAttack(attack);
+    }
+
+    @Override
+    public void receiveStaffAttack(Staff attack){
+        receiveAttack(attack);
+    }
+
+    @Override
+    public void receiveSwordAttack(Sword attack){
+        receiveAttack(attack);
+    }
+
+  protected void receiveWeaknessAttack(IEquipableItem attack) {
+      this.currentHitPoints -= attack.getPower()*1.5;
+  }
+  protected void receiveResistantAttack(IEquipableItem attack) {
+      if(attack.getPower() - 20 >=0) {
+          this.currentHitPoints -= attack.getPower() - 20;
+      }
+  }
 }
+

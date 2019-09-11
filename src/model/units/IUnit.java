@@ -81,4 +81,18 @@ public interface IUnit {
 
     public void equipSword(final Sword sword);
 
+  void attack(IUnit other);
+
+  void receiveAxeAttack(Axe attack);
+
+  void receiveBowAttack(Bow attack);
+
+  void receiveSpearAttack(Spear attack);
+
+  void receiveStaffAttack(Staff attack);
+
+  void receiveSwordAttack(Sword attack);
+
+
+
 }

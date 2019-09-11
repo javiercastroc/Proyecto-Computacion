@@ -43,7 +43,21 @@ public class Fighter extends AbstractUnit {
 
   @Override
     public void equipSword(final Sword sword) {
-        return; }
+        return;
+  }
+  @Override
+  public void receiveSpearAttack(Spear attack) {
+      if (getEquippedItem() != null) {
+          receiveResistantAttack(attack);
+      }
+  }
+  @Override
+  public void receiveSwordAttack(Sword attack) {
+      if (getEquippedItem() != null) {
+          receiveWeaknessAttack(attack);
+      }
+  }
+
 
 
 }

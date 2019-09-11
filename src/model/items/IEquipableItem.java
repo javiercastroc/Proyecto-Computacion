@@ -49,4 +49,6 @@ public interface IEquipableItem {
    * @return the maximum range of the item
    */
   int getMaxRange();
+
+  void attack(IUnit other);
 }

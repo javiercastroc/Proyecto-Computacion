@@ -33,4 +33,9 @@ public class Staff extends AbstractItem {
     unit.equipStaff(this);
     this.changeOwner(unit);;
   }
+
+  @Override
+  public void attack(IUnit other) {
+    other.receiveStaffAttack(this);
+  }
 }

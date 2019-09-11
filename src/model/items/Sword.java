@@ -33,4 +33,9 @@ public class Sword extends AbstractItem {
     unit.equipSword(this);
     this.changeOwner(unit);;
   }
+
+  @Override
+  public void attack(IUnit other) {
+    other.receiveSwordAttack(this);
+  }
 }

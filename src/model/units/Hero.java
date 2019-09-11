@@ -51,4 +51,17 @@ public class Hero extends AbstractUnit {
   @Override
   public void equipSword(final Sword sword) {
     return; }
+
+  @Override
+  public void receiveAxeAttack(Axe attack) {
+    if (getEquippedItem() != null) {
+      receiveWeaknessAttack(attack);
+    }
+  }
+  @Override
+  public void receiveSwordAttack(Sword attack) {
+    if (getEquippedItem() != null) {
+      receiveResistantAttack(attack);
+    }
+  }
 }
