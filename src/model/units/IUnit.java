@@ -24,6 +24,8 @@ public interface IUnit {
    */
   void equipItem(IEquipableItem item);
 
+  int getMaxItems();
+
   /**
    * @return hit points of the unit
    */
@@ -47,7 +49,6 @@ public interface IUnit {
    * @param item
    *     the item to be equipped
    */
-  void setEquippedItem(IEquipableItem item);
 
   void addItem(IEquipableItem item);
 

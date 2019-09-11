@@ -30,8 +30,8 @@ public class Axe extends AbstractItem {
 
   @Override
   public void equipTo(final IUnit unit) {
-    unit.equipAxe(this);
-    this.changeOwner(unit);
+    if (unit.getItems().contains(this) && this.getOwner()==unit){
+    unit.equipAxe(this);}
   }
   @Override
   public void attack(IUnit other) {

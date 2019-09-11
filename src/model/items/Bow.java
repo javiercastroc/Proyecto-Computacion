@@ -31,8 +31,8 @@ public class Bow extends AbstractItem {
 
   @Override
   public void equipTo(final IUnit unit) {
-    unit.equipBow(this);
-    this.changeOwner(unit);
+    if (unit.getItems().contains(this) && this.getOwner()==unit){
+    unit.equipBow(this);}
   }
 
   @Override

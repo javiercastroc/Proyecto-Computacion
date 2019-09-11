@@ -28,7 +28,7 @@ public interface IEquipableItem {
   IUnit getOwner();
 
 
- void changeOwner(IUnit unit);
+ void setOwner(IUnit unit);
 
   /**
    * @return the name of the item

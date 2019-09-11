@@ -52,6 +52,9 @@ public abstract class AbstractUnit implements IUnit {
   }
 
   @Override
+  public int getMaxItems(){return maxItems;}
+
+  @Override
   public int getCurrentHitPoints() {
     return currentHitPoints;
   }
@@ -69,36 +72,32 @@ public abstract class AbstractUnit implements IUnit {
     return equippedItem;
   }
 
-  public void giveItem(final IEquipableItem item, IUnit unit){
-      if(this.getLocation().isNeighbour(unit.getLocation())){
-          if(item==this.getEquippedItem() && this.items.size()<this.maxItems) {
-              this.setEquippedItem(null);
+  public void giveItem(final IEquipableItem item, IUnit other){
+      if(this.getLocation().isNeighbour(other.getLocation())){
+          if(item==this.getEquippedItem() && other.getItems().size()<other.getMaxItems() && item!=null) {
+              this.equipItem(null);
               this.items.remove(item);
-              unit.addItem(item);
+              other.addItem(item);
+
           }
-          if(this.items.contains(item) && this.items.size()<this.maxItems){
+          if(this.items.contains(item) && other.getItems().size()<other.getMaxItems() && item!=null){
               this.items.remove(item);
-              unit.addItem(item);
+              other.addItem(item);
           }}
 
   }
 
-    @Override
-    public void setEquippedItem(final IEquipableItem item) {
-        if (items.contains(item) && item.getOwner()==this){
-            item.equipTo(this);
-        }
-    }
 
     @Override
     public void equipItem(final IEquipableItem item) {
-        item.equipTo(this);
+      if(item==null){equippedItem=null;}
+      else {item.equipTo(this);}
     }
 
   public void addItem(IEquipableItem item) {
     if(this.items.size()<this.maxItems){
       this.items.add(item);
-      item.changeOwner(this);
+      item.setOwner(this);
     }
   }
 

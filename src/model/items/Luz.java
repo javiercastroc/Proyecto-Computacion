@@ -30,8 +30,8 @@ public class Luz extends AbstractItem {
 
     @Override
     public void equipTo(final IUnit unit) {
-        unit.equipLuz(this);
-        this.changeOwner(unit);
+        if (unit.getItems().contains(this) && this.getOwner()==unit){
+            unit.equipLuz(this);}
     }
     @Override
     public void attack(IUnit other) {

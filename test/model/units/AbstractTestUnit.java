@@ -57,6 +57,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
   @Override
   public abstract void setTestUnit();
 
+
   /**
    * Creates a set of testing weapons
    */

@@ -30,8 +30,8 @@ public class Staff extends AbstractItem {
 
   @Override
   public void equipTo(final IUnit unit) {
-    unit.equipStaff(this);
-    this.changeOwner(unit);
+    if (unit.getItems().contains(this) && this.getOwner()==unit){
+    unit.equipStaff(this);}
   }
 
   @Override

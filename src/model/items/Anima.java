@@ -30,8 +30,8 @@ public class Anima extends AbstractItem {
 
     @Override
     public void equipTo(final IUnit unit) {
-        unit.equipAnima(this);
-        this.changeOwner(unit);
+        if (unit.getItems().contains(this) && this.getOwner()==unit){
+        unit.equipAnima(this);}
     }
     @Override
     public void attack(IUnit other) {

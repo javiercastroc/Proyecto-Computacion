@@ -30,8 +30,8 @@ public class Sword extends AbstractItem {
 
   @Override
   public void equipTo(final IUnit unit) {
-    unit.equipSword(this);
-    this.changeOwner(unit);;
+    if (unit.getItems().contains(this) && this.getOwner()==unit){
+    unit.equipSword(this);}
   }
 
   @Override

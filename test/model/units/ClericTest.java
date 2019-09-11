@@ -1,9 +1,8 @@
 package model.units;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Ignacio Slater Muñoz
@@ -33,6 +32,10 @@ public class ClericTest extends AbstractTestUnit {
   public void equipStaffTest() {
     assertNull(cleric.getEquippedItem());
     cleric.equipItem(staff);
-    assertEquals(staff, cleric.getEquippedItem());
+    assertFalse(cleric.getItems().contains(staff));
+    assertNull(cleric.getEquippedItem());
+    cleric.addItem(staff);
+    cleric.equipItem(staff);
+    assertEquals(staff,cleric.getEquippedItem());
   }
 }

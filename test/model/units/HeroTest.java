@@ -1,9 +1,8 @@
 package model.units;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Ignacio Slater Muñoz
@@ -33,6 +32,10 @@ public class HeroTest extends AbstractTestUnit {
   public void equipSpearTest() {
     assertNull(hero.getEquippedItem());
     hero.equipItem(spear);
-    assertEquals(spear, hero.getEquippedItem());
+    assertFalse(hero.getItems().contains(spear));
+    assertNull(hero.getEquippedItem());
+    hero.addItem(spear);
+    hero.equipItem(spear);
+    assertEquals(spear,hero.getEquippedItem());
   }
 }

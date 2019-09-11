@@ -104,6 +104,7 @@ public class Sorcerer extends AbstractUnit {
     public void receiveStaffHeal(Staff attack) {
         receiveHeal(attack);
     }
+
     public void normal(IEquipableItem attack){
         receiveAttack(attack);
     }

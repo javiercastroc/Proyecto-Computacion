@@ -31,8 +31,8 @@ public class Oscuridad extends AbstractItem {
 
     @Override
     public void equipTo(final IUnit unit) {
-        unit.equipOscuridad(this);
-        this.changeOwner(unit);
+        if (unit.getItems().contains(this) && this.getOwner()==unit){
+        unit.equipOscuridad(this);}
     }
     @Override
     public void attack(IUnit other) {
