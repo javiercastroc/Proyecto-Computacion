@@ -4,7 +4,7 @@ import model.units.IUnit;
 
 /**
  * @author Ignacio Slater Muñoz
- * @since
+ * @since 1.0
  */
 public class Bow extends AbstractItem {
 
@@ -32,7 +32,7 @@ public class Bow extends AbstractItem {
   @Override
   public void equipTo(final IUnit unit) {
     unit.equipBow(this);
-    this.changeOwner(unit);;
+    this.changeOwner(unit);
   }
 
   @Override
@@ -42,4 +42,13 @@ public class Bow extends AbstractItem {
 
   @Override
   public void heal(IUnit other) {}
+
+  @Override
+  public void oscuridadVS(AbstractItem attack) {}
+
+  @Override
+  public void luzVS(AbstractItem attack) { }
+
+  @Override
+  public void animaVS(AbstractItem attack) { }
 }

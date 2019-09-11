@@ -40,4 +40,13 @@ public class Sword extends AbstractItem {
   }
   @Override
   public void heal(IUnit other) {}
+
+  @Override
+  public void oscuridadVS(AbstractItem attack) {}
+
+  @Override
+  public void luzVS(AbstractItem attack) {}
+
+  @Override
+  public void animaVS(AbstractItem attack) {}
 }

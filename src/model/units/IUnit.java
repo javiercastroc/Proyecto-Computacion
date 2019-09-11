@@ -41,7 +41,7 @@ public interface IUnit {
    */
   IEquipableItem getEquippedItem();
 
-  public void giveItem(IEquipableItem item, IUnit unit);
+  void giveItem(IEquipableItem item, IUnit unit);
 
   /**
    * @param item
@@ -49,7 +49,7 @@ public interface IUnit {
    */
   void setEquippedItem(IEquipableItem item);
 
-  public void addItem(IEquipableItem item);
+  void addItem(IEquipableItem item);
 
   /**
    * @return the current location of the unit
@@ -83,6 +83,12 @@ public interface IUnit {
 
    void equipSword(final Sword sword);
 
+   void equipAnima(final Anima anima);
+
+   void equipOscuridad(final Oscuridad oscuridad);
+
+    void equipLuz(final Luz luz);
+
    boolean isInRange(IUnit other);
 
   void attack(IUnit other);
@@ -101,6 +107,17 @@ public interface IUnit {
 
   void receiveSwordAttack(Sword attack);
 
+  void receiveAnimaAttack(Anima attack);
+
+  void receiveLuzAttack(Luz attack);
+
+  void receiveOscuridadAttack(Oscuridad attack);
+
+  void normal(IEquipableItem attack);
+
+  void mayor(IEquipableItem attack);
+
+  void menor(IEquipableItem attack);
 
 
 }

@@ -52,4 +52,10 @@ public interface IEquipableItem {
 
   void attack(IUnit other);
   void heal(IUnit other);
+
+  void oscuridadVS(AbstractItem attack);
+
+  void luzVS(AbstractItem attack);
+
+  void animaVS(AbstractItem attack);
 }

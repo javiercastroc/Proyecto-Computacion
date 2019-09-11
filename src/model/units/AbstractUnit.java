@@ -145,12 +145,15 @@ public abstract class AbstractUnit implements IUnit {
   }}
   @Override
   public void heal(IUnit other) {
-      if(other.getEquippedItem()!=null && other.isInRange(this)){
-          getEquippedItem().heal(other);
-      }}
+      if(getCurrentHitPoints()>0 && other.getCurrentHitPoints()>0){
+      if(getEquippedItem()!=null && isInRange(other)){
+          getEquippedItem().heal(other); }}
+  }
 
   protected void receiveAttack(IEquipableItem attack) {
-        this.currentHitPoints -= attack.getPower();
+      if(getCurrentHitPoints()-attack.getPower()>=0){
+        this.currentHitPoints -= attack.getPower();}
+      else this.currentHitPoints=0;
     }
 
     @Override
@@ -178,14 +181,33 @@ public abstract class AbstractUnit implements IUnit {
         receiveAttack(attack);
     }
 
-  protected void receiveWeaknessAttack(IEquipableItem attack) {
-      this.currentHitPoints -= attack.getPower()*1.5;
-  }
+    @Override
+    public void receiveAnimaAttack(Anima attack){
+        receiveAttack(attack);
+    }
+
+    @Override
+    public void receiveOscuridadAttack(Oscuridad attack){
+        receiveAttack(attack);
+    }
+
+    @Override
+    public void receiveLuzAttack(Luz attack){
+        receiveAttack(attack);
+    }
+
+
+    protected void receiveWeaknessAttack(IEquipableItem attack) {
+      if(getCurrentHitPoints()-(attack.getPower()*1.5)>=0){
+          this.currentHitPoints -= attack.getPower()*1.5; }
+      else this.currentHitPoints=0;}
+
+
   protected void receiveResistantAttack(IEquipableItem attack) {
-      if(attack.getPower() - 20 >=0) {
-          this.currentHitPoints -= attack.getPower() - 20;
-      }
-  }
+      if(attack.getPower() - 20 >=0 && getCurrentHitPoints()-(attack.getPower()-20)>=0){
+          this.currentHitPoints -= attack.getPower() - 20; }
+      else this.currentHitPoints=0; }
+
   protected void receiveHeal(IEquipableItem attack){
       if (getCurrentHitPoints() + attack.getPower()<=getMaxHitPoints()){
           this.currentHitPoints += attack.getPower();
