@@ -1,6 +1,6 @@
 package model.units;
 
-import model.items.IEquipableItem;
+import model.items.*;
 import model.map.Location;
 
 /**
@@ -21,13 +21,26 @@ public class SwordMaster extends AbstractUnit {
   /**
    * Sets the currently equipped item of this unit.
    *
-   * @param item
+   * @param axe
    *     the item to equip
    */
   @Override
-  public void equipItem(final IEquipableItem item) {
-    if (item instanceof SwordMaster) {
-      equippedItem = item;
-    }
-  }
+  public void equipAxe(final Axe axe) {
+    return; }
+
+  @Override
+  public void equipBow(final Bow bow) {
+    return; }
+
+  @Override
+  public void equipSpear(final Spear spear) {
+    return; }
+
+  @Override
+  public void equipStaff(final Staff staff) {
+    return; }
+
+  @Override
+  public void equipSword(final Sword sword) {
+    equippedItem=sword; }
 }

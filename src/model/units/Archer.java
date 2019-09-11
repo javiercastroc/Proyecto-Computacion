@@ -1,7 +1,6 @@
 package model.units;
 
-import model.items.Bow;
-import model.items.IEquipableItem;
+import model.items.*;
 import model.map.Location;
 
 /**
@@ -36,13 +35,26 @@ public class Archer extends AbstractUnit {
    * <p>
    * The <i>Archer</i> can <b>only equip Bows</b>.
    *
-   * @param item
+   * @param axe
    *     the item to equip
    */
   @Override
-  public void equipItem(final IEquipableItem item) {
-    if (item instanceof Bow) {
-      equippedItem = item;
-    }
-  }
+  public void equipAxe(final Axe axe) {
+    return; }
+
+  @Override
+  public void equipBow(final Bow bow) {
+    equippedItem=bow; }
+
+  @Override
+  public void equipSpear(final Spear spear) {
+    return; }
+
+  @Override
+  public void equipStaff(final Staff staff) {
+    return; }
+
+  @Override
+  public void equipSword(final Sword sword) {
+    return; }
 }

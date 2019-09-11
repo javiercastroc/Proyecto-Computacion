@@ -64,24 +64,33 @@ public abstract class AbstractUnit implements IUnit {
   }
 
   public void giveItem(final IEquipableItem item, IUnit unit){
-    if(item==this.getEquippedItem() && this.items.size()<this.maxItems) {
-      this.setEquippedItem(null);
-      this.items.remove(item);
-      unit.addItem(item);
-    }
-    if(this.items.contains(item) && this.items.size()<this.maxItems){
-      this.items.remove(item);
-      unit.addItem(item);
-    }
-    else return;
+      if(this.location.isNeighbour(unit.getLocation())){
+          if(item==this.getEquippedItem() && this.items.size()<this.maxItems) {
+              this.setEquippedItem(null);
+              this.items.remove(item);
+              unit.addItem(item);
+          }
+          if(this.items.contains(item) && this.items.size()<this.maxItems){
+              this.items.remove(item);
+              unit.addItem(item);
+          }
+          else return;}
+      else return;
   }
 
-  @Override
-  public void setEquippedItem(final IEquipableItem item) {
-    this.equippedItem = item;
-  }
+    @Override
+    public void setEquippedItem(final IEquipableItem item) {
+        if (items.contains(item) && item.getOwner()==this){
+            item.equipTo(this);
+        }
+    }
 
-  public void addItem(final IEquipableItem item) {
+    @Override
+    public void equipItem(final IEquipableItem item) {
+      item.equipTo(this);
+    }
+
+  public void addItem(IEquipableItem item) {
     if(this.items.size()<this.maxItems){
       this.items.add(item);
       item.changeOwner(this);

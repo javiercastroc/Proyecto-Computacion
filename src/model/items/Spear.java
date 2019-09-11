@@ -1,5 +1,7 @@
 package model.items;
 
+import model.units.IUnit;
+
 /**
  * This class represents a <i>spear</i>.
  * <p>
@@ -25,4 +27,10 @@ public class Spear extends AbstractItem {
   public Spear(final String name, final int power, final int minRange, final int maxRange) {
     super(name, power, minRange, maxRange);
   }
+
+    @Override
+    public void equipTo(final IUnit unit) {
+        unit.equipSpear(this);
+        this.changeOwner(unit);;
+    }
 }

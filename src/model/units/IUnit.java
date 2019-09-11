@@ -1,7 +1,8 @@
 package model.units;
 
 import java.util.List;
-import model.items.IEquipableItem;
+
+import model.items.*;
 import model.map.Location;
 
 /**
@@ -38,7 +39,7 @@ public interface IUnit {
    */
   IEquipableItem getEquippedItem();
 
-  public void giveItem(final IEquipableItem item, IUnit unit);
+  public void giveItem(IEquipableItem item, IUnit unit);
 
   /**
    * @param item
@@ -69,4 +70,15 @@ public interface IUnit {
    * If the other location is out of this unit's movement range, the unit doesn't move.
    */
   void moveTo(Location targetLocation);
+
+    public void equipAxe(final Axe axe);
+
+    public void equipBow(final Bow bow);
+
+    public void equipSpear(final Spear spear);
+
+    public void equipStaff(final Staff staff);
+
+    public void equipSword(final Sword sword);
+
 }

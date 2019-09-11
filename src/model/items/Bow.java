@@ -1,5 +1,7 @@
 package model.items;
 
+import model.units.IUnit;
+
 /**
  * @author Ignacio Slater Muñoz
  * @since
@@ -25,5 +27,11 @@ public class Bow extends AbstractItem {
     super(name, power, minRange, maxRange);
     this.minRange = Math.max(minRange, 2);
     this.maxRange = Math.max(maxRange, this.minRange);
+  }
+
+  @Override
+  public void equipTo(final IUnit unit) {
+    unit.equipBow(this);
+    this.changeOwner(unit);;
   }
 }

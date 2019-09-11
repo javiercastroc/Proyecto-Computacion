@@ -1,5 +1,7 @@
 package model.items;
 
+import model.units.IUnit;
+
 /**
  * This class represents an Axe.
  * <p>
@@ -24,5 +26,11 @@ public class Axe extends AbstractItem {
    */
   public Axe(final String name, final int power, final int minRange, final int maxRange) {
     super(name, power, minRange, maxRange);
+  }
+
+  @Override
+  public void equipTo(final IUnit unit) {
+    unit.equipAxe(this);
+    this.changeOwner(unit);;
   }
 }

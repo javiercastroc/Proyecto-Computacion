@@ -1,6 +1,6 @@
 package model.units;
 
-import model.items.IEquipableItem;
+import model.items.*;
 import model.map.Location;
 
 /**
@@ -35,8 +35,22 @@ public class Alpaca extends AbstractUnit {
    * The <i>Alpaca</i> cannot equip any item.
    */
   @Override
-  public void equipItem(final IEquipableItem item) {
-    // Method body intentionally left empty
-  }
+  public void equipAxe(final Axe axe) {
+    return; }
 
+  @Override
+  public void equipBow(final Bow bow) {
+    return; }
+
+  @Override
+  public void equipSpear(final Spear spear) {
+    return; }
+
+  @Override
+  public void equipStaff(final Staff staff) {
+    return; }
+
+  @Override
+  public void equipSword(final Sword sword) {
+    return; }
 }

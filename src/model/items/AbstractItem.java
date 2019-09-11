@@ -37,11 +37,9 @@ public abstract class AbstractItem implements IEquipableItem {
 
   @Override
   public void equipTo(final IUnit unit) {
-    unit.setEquippedItem(this);
-    owner = unit;
+    unit.equipItem(this);
+    this.changeOwner(unit);
   }
-
-
 
   @Override
   public IUnit getOwner() {
