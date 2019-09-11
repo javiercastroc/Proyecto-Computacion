@@ -57,7 +57,10 @@ public class Fighter extends AbstractUnit {
           receiveWeaknessAttack(attack);
       }
   }
-
+  @Override
+  public void receiveStaffHeal(Staff attack) {
+      receiveHeal(attack);
+    }
 
 
 }

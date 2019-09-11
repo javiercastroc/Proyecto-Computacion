@@ -31,11 +31,14 @@ public class Staff extends AbstractItem {
   @Override
   public void equipTo(final IUnit unit) {
     unit.equipStaff(this);
-    this.changeOwner(unit);;
+    this.changeOwner(unit);
   }
 
   @Override
   public void attack(IUnit other) {
-    other.receiveStaffAttack(this);
+  }
+
+  public void heal(IUnit other) {
+    other.receiveStaffHeal(this);
   }
 }

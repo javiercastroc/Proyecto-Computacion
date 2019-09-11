@@ -33,24 +33,20 @@ public class Hero extends AbstractUnit {
    *     the item to equip
    */
   @Override
-  public void equipAxe(final Axe axe) {
-    return; }
+  public void equipAxe(final Axe axe) {}
 
   @Override
-  public void equipBow(final Bow bow) {
-    return; }
+  public void equipBow(final Bow bow) {}
 
   @Override
   public void equipSpear(final Spear spear) {
     equippedItem=spear; }
 
   @Override
-  public void equipStaff(final Staff staff) {
-    return; }
+  public void equipStaff(final Staff staff) {}
 
   @Override
-  public void equipSword(final Sword sword) {
-    return; }
+  public void equipSword(final Sword sword) {}
 
   @Override
   public void receiveAxeAttack(Axe attack) {
@@ -63,5 +59,10 @@ public class Hero extends AbstractUnit {
     if (getEquippedItem() != null) {
       receiveResistantAttack(attack);
     }
+  }
+
+  @Override
+  public void receiveStaffHeal(Staff attack) {
+    receiveHeal(attack);
   }
 }

@@ -15,39 +15,36 @@ public class Cleric extends AbstractUnit {
   /**
    * Creates a new Unit.
    *
-   * @param hitPoints
-   *     the maximum amount of damage a unit can sustain
-   * @param movement
-   *     the number of panels a unit can move
+   * @param hitPoints the maximum amount of damage a unit can sustain
+   * @param movement  the number of panels a unit can move
    */
   public Cleric(final int hitPoints, final int movement, final Location location,
-      IEquipableItem... items) {
+                IEquipableItem... items) {
     super(hitPoints, movement, location, 3, items);
   }
 
   /**
    * Sets the currently equipped item of this unit.
    *
-   * @param axe
-   *     the item to equip
+   * @param axe the item to equip
    */
   @Override
-  public void equipAxe(final Axe axe) {
-    return; }
+  public void equipAxe(final Axe axe) {}
 
   @Override
-  public void equipBow(final Bow bow) {
-    return; }
+  public void equipBow(final Bow bow) {}
 
   @Override
-  public void equipSpear(final Spear spear) {
-    return; }
+  public void equipSpear(final Spear spear) {}
 
   @Override
-  public void equipStaff(final Staff staff) {
-    equippedItem =staff; }
+  public void equipStaff(final Staff staff) {equippedItem=staff;}
 
   @Override
-  public void equipSword(final Sword sword) {
-    return; }
+  public void equipSword(final Sword sword){}
+
+  @Override
+  public void receiveStaffHeal(Staff attack) {
+    receiveHeal(attack);
+  }
 }

@@ -38,4 +38,6 @@ public class Sword extends AbstractItem {
   public void attack(IUnit other) {
     other.receiveSwordAttack(this);
   }
+  @Override
+  public void heal(IUnit other) {}
 }

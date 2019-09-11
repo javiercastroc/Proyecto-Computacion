@@ -22,6 +22,7 @@ import model.map.Location;
 public abstract class AbstractUnit implements IUnit {
 
   protected final List<IEquipableItem> items = new ArrayList<>();
+  private final int maxHitPoints;
   private int currentHitPoints;
   private final int movement;
   private final int maxItems;
@@ -42,6 +43,7 @@ public abstract class AbstractUnit implements IUnit {
    */
   protected AbstractUnit(final int hitPoints, final int movement,
       final Location location, final int maxItems, final IEquipableItem... items) {
+    this.maxHitPoints =hitPoints;
     this.currentHitPoints = hitPoints;
     this.movement = movement;
     this.location = location;
@@ -55,6 +57,9 @@ public abstract class AbstractUnit implements IUnit {
   }
 
   @Override
+  public int getMaxHitPoints(){return maxHitPoints;}
+
+  @Override
   public List<IEquipableItem> getItems() {
     return List.copyOf(items);
   }
@@ -65,7 +70,7 @@ public abstract class AbstractUnit implements IUnit {
   }
 
   public void giveItem(final IEquipableItem item, IUnit unit){
-      if(this.location.isNeighbour(unit.getLocation())){
+      if(this.getLocation().isNeighbour(unit.getLocation())){
           if(item==this.getEquippedItem() && this.items.size()<this.maxItems) {
               this.setEquippedItem(null);
               this.items.remove(item);
@@ -74,9 +79,8 @@ public abstract class AbstractUnit implements IUnit {
           if(this.items.contains(item) && this.items.size()<this.maxItems){
               this.items.remove(item);
               unit.addItem(item);
-          }
-          else return;}
-      else return;
+          }}
+
   }
 
     @Override
@@ -121,10 +125,29 @@ public abstract class AbstractUnit implements IUnit {
     }
   }
   @Override
-  public void attack(IUnit other) {
-      if(getEquippedItem()!=null){
-        getEquippedItem().attack(other);}
+  public boolean isInRange(IUnit other) {
+      return this.getEquippedItem().getMinRange() <= this.getLocation().distanceTo(other.getLocation())
+              && this.getLocation().distanceTo(other.getLocation()) <= this.getEquippedItem().getMaxRange();
   }
+  @Override
+  public void attack(IUnit other) {
+      int vidainicial = other.getCurrentHitPoints();
+      if(getCurrentHitPoints()>0 && other.getCurrentHitPoints()>0){
+      if(getEquippedItem()!=null && isInRange(other)){
+        getEquippedItem().attack(other);
+        if(other.getCurrentHitPoints()>0 && vidainicial>other.getCurrentHitPoints()){other.counterAttack(this);}}
+  }}
+
+  @Override
+  public void counterAttack(IUnit other) {
+      if(other.getEquippedItem()!=null && other.isInRange(this)){
+          getEquippedItem().attack(other);
+  }}
+  @Override
+  public void heal(IUnit other) {
+      if(other.getEquippedItem()!=null && other.isInRange(this)){
+          getEquippedItem().heal(other);
+      }}
 
   protected void receiveAttack(IEquipableItem attack) {
         this.currentHitPoints -= attack.getPower();
@@ -146,7 +169,7 @@ public abstract class AbstractUnit implements IUnit {
     }
 
     @Override
-    public void receiveStaffAttack(Staff attack){
+    public void receiveStaffHeal(Staff attack){
         receiveAttack(attack);
     }
 
@@ -163,5 +186,13 @@ public abstract class AbstractUnit implements IUnit {
           this.currentHitPoints -= attack.getPower() - 20;
       }
   }
+  protected void receiveHeal(IEquipableItem attack){
+      if (getCurrentHitPoints() + attack.getPower()<=getMaxHitPoints()){
+          this.currentHitPoints += attack.getPower();
+      }
+      else currentHitPoints=getMaxHitPoints();
+  }
+
+
 }
 

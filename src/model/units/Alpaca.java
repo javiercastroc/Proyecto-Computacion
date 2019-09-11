@@ -35,22 +35,22 @@ public class Alpaca extends AbstractUnit {
    * The <i>Alpaca</i> cannot equip any item.
    */
   @Override
-  public void equipAxe(final Axe axe) {
-    return; }
+  public void equipAxe(final Axe axe) {}
 
   @Override
-  public void equipBow(final Bow bow) {
-    return; }
+  public void equipBow(final Bow bow) { }
 
   @Override
-  public void equipSpear(final Spear spear) {
-    return; }
+  public void equipSpear(final Spear spear) { }
 
   @Override
-  public void equipStaff(final Staff staff) {
-    return; }
+  public void equipStaff(final Staff staff) {}
 
   @Override
-  public void equipSword(final Sword sword) {
-    return; }
+  public void equipSword(final Sword sword) {}
+
+  @Override
+  public void receiveStaffHeal(Staff attack) {
+    receiveHeal(attack);
+  }
 }

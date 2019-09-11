@@ -31,10 +31,13 @@ public class Axe extends AbstractItem {
   @Override
   public void equipTo(final IUnit unit) {
     unit.equipAxe(this);
-    this.changeOwner(unit);;
+    this.changeOwner(unit);
   }
   @Override
   public void attack(IUnit other) {
     other.receiveAxeAttack(this);
   }
+
+  @Override
+  public void heal(IUnit other) {}
 }

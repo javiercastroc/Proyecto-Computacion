@@ -51,4 +51,5 @@ public interface IEquipableItem {
   int getMaxRange();
 
   void attack(IUnit other);
+  void heal(IUnit other);
 }

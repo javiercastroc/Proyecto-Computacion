@@ -29,6 +29,8 @@ public interface IUnit {
    */
   int getCurrentHitPoints();
 
+  int getMaxHitPoints();
+
   /**
    * @return the items carried by this unit
    */
@@ -71,17 +73,23 @@ public interface IUnit {
    */
   void moveTo(Location targetLocation);
 
-    public void equipAxe(final Axe axe);
+    void equipAxe(final Axe axe);
 
-    public void equipBow(final Bow bow);
+   void equipBow(final Bow bow);
 
-    public void equipSpear(final Spear spear);
+   void equipSpear(final Spear spear);
 
-    public void equipStaff(final Staff staff);
+   void equipStaff(final Staff staff);
 
-    public void equipSword(final Sword sword);
+   void equipSword(final Sword sword);
+
+   boolean isInRange(IUnit other);
 
   void attack(IUnit other);
+
+  void counterAttack(IUnit other);
+
+  void heal(IUnit other);
 
   void receiveAxeAttack(Axe attack);
 
@@ -89,7 +97,7 @@ public interface IUnit {
 
   void receiveSpearAttack(Spear attack);
 
-  void receiveStaffAttack(Staff attack);
+  void receiveStaffHeal(Staff attack);
 
   void receiveSwordAttack(Sword attack);
 
