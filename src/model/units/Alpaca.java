@@ -14,6 +14,7 @@ import model.map.Location;
  */
 public class Alpaca extends AbstractUnit {
 
+
   /**
    * Creates a new Alpaca.
    *

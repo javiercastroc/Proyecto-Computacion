@@ -92,6 +92,21 @@ public interface ITestUnit {
    */
   Bow getBow();
 
+  @Test
+  void equipAnimaTest();
+
+  Anima getAnima();
+
+  @Test
+  void equipLuzTest();
+
+  Luz getLuz();
+
+  @Test
+  void equipOscuridadTest();
+
+  Oscuridad getOscuridad();
+
   /**
    * Checks if the unit moves correctly
    */
@@ -107,4 +122,10 @@ public interface ITestUnit {
    * @return the target Alpaca
    */
   Alpaca getTargetAlpaca();
+
+  @Test
+  void inRangeTest();
+
+
+
 }

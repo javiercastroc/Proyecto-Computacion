@@ -55,6 +55,7 @@ public class Sorcerer extends AbstractUnit {
     public void receiveOscuridadAttack(Oscuridad attack){
         if (getEquippedItem() != null) {
             this.getEquippedItem().oscuridadVS(attack);}
+        else receiveAttack(attack);
     }
 
     @Override
@@ -112,7 +113,7 @@ public class Sorcerer extends AbstractUnit {
         receiveWeaknessAttack(attack);
     }
     public void menor(IEquipableItem attack){
-        receiveWeaknessAttack(attack);
+        receiveResistantAttack(attack);
     }
 
 }

@@ -1,14 +1,12 @@
 package model.units;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import model.items.*;
 import model.map.Field;
 import model.map.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Ignacio Slater Muñoz
@@ -17,12 +15,17 @@ import org.junit.jupiter.api.Test;
 public abstract class AbstractTestUnit implements ITestUnit {
 
   protected Alpaca targetAlpaca;
+  protected Alpaca chargerAlpaca;
   protected Bow bow;
   protected Field field;
   protected Axe axe;
   protected Sword sword;
   protected Staff staff;
   protected Spear spear;
+  protected Anima anima;
+  protected Luz luz;
+  protected Oscuridad oscuridad;
+
 
   @Override
   public void setTargetAlpaca() {
@@ -63,11 +66,14 @@ public abstract class AbstractTestUnit implements ITestUnit {
    */
   @Override
   public void setWeapons() {
-    this.axe = new Axe("Axe", 10, 1, 2);
-    this.sword = new Sword("Sword", 10, 1, 2);
-    this.spear = new Spear("Spear", 10, 1, 2);
-    this.staff = new Staff("Staff", 10, 1, 2);
-    this.bow = new Bow("Bow", 10, 2, 3);
+    this.axe = new Axe("Axe", 20, 1, 2);
+    this.sword = new Sword("Sword", 20, 1, 2);
+    this.spear = new Spear("Spear", 20, 1, 2);
+    this.staff = new Staff("Staff", 20, 1, 2);
+    this.bow = new Bow("Bow", 20, 2, 3);
+    this.anima = new Anima("Anima", 20, 1, 2);
+    this.luz = new Luz("Luz", 20, 1, 2);
+    this.oscuridad = new Oscuridad("Oscuridad", 20, 1, 2);
   }
 
   /**
@@ -77,6 +83,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
   @Test
   public void constructorTest() {
     assertEquals(50, getTestUnit().getCurrentHitPoints());
+    assertEquals(50, getTestUnit().getMaxHitPoints());
     assertEquals(2, getTestUnit().getMovement());
     assertEquals(new Location(0, 0), getTestUnit().getLocation());
     assertTrue(getTestUnit().getItems().isEmpty());
@@ -175,6 +182,51 @@ public abstract class AbstractTestUnit implements ITestUnit {
     return bow;
   }
 
+
+  @Override
+  @Test
+  public void equipAnimaTest() {
+    checkEquippedItem(getAnima());
+  }
+
+  /**
+   * @return the test anima
+   */
+  @Override
+  public Anima getAnima() {
+    return anima;
+  }
+
+  @Override
+  @Test
+  public void equipLuzTest() {
+    checkEquippedItem(getLuz());
+  }
+
+  /**
+   * @return the test luz
+   */
+  @Override
+  public Luz getLuz() {
+    return luz;
+  }
+
+  @Override
+  @Test
+  public void equipOscuridadTest() {
+    checkEquippedItem(getOscuridad());
+  }
+
+  /**
+   * @return the test anima
+   */
+  @Override
+  public Oscuridad getOscuridad() {
+    return oscuridad;
+  }
+
+
+
   /**
    * Checks if the unit moves correctly
    */
@@ -207,4 +259,19 @@ public abstract class AbstractTestUnit implements ITestUnit {
   public Alpaca getTargetAlpaca() {
     return targetAlpaca;
   }
+
+  @Test
+  public void inRangeTest(){
+    getTestUnit().addItem(null);
+    assertNull(getTestUnit().getEquippedItem());
+    assertFalse(getTestUnit().isInRange(getTargetAlpaca()));
+  }
+  @Test
+  public void attackWithoutWeaponTest(){
+    getTestUnit().addItem(null);
+    int vidainicial=getTargetAlpaca().getCurrentHitPoints();
+    getTestUnit().attack(getTargetAlpaca());
+    assertEquals(getTargetAlpaca().getCurrentHitPoints(),vidainicial);
+  }
+
 }

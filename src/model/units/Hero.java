@@ -107,4 +107,6 @@ public class Hero extends AbstractUnit {
     }
     else receiveAttack(attack);
   }
+
+
 }

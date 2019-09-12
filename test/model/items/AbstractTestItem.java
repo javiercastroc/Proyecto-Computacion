@@ -1,12 +1,14 @@
 package model.items;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import model.units.AbstractUnit;
+import model.units.Alpaca;
 import model.units.IUnit;
+import model.map.Field;
+import model.map.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Defines some common methods for all the items tests
@@ -16,21 +18,35 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractTestItem {
 
+  protected Alpaca targetAlpaca;
+  protected Field field;
   protected String expectedName;
   protected int expectedPower;
   protected short expectedMinRange;
   protected short expectedMaxRange;
+
+  public void setTargetAlpaca() {
+    targetAlpaca = new Alpaca(50, 2, field.getCell(1, 0));
+  }
 
   /**
    * Sets up the items to be tested
    */
   @BeforeEach
   public void setUp() {
+    setField();
     setTestItem();
     setWrongRangeItem();
     setTestUnit();
+    setTargetAlpaca();
   }
 
+  public void setField() {
+    this.field = new Field();
+    this.field.addCells(true, new Location(0, 0), new Location(0, 1), new Location(0, 2),
+            new Location(1, 0), new Location(1, 1), new Location(1, 2), new Location(2, 0),
+            new Location(2, 1), new Location(2, 2));
+  }
   /**
    * Sets up a correctly implemented item that's going to be tested
    */
@@ -112,6 +128,29 @@ public abstract class AbstractTestItem {
     getTestItem().equipTo(unit);
     assertEquals(unit, getTestItem().getOwner());
   }
+  @Test
+  public void equipNullTest(){
+    assertNull(getTestItem().getOwner());
+    IUnit unit = getTestUnit();
+    unit.addItem(getTestItem());
+    getTestItem().equipTo(unit);
+    unit.equipItem(null);
+    assertNull(unit.getEquippedItem());
+    assertTrue(unit.getItems().contains(getTestItem()));
+  }
+
+  @Test
+  public void equipOtherTest() {
+    assertNull(getTestItem().getOwner());
+    IUnit unit = getTestUnit();
+    targetAlpaca.addItem(getTestItem());
+    getTestItem().equipTo(unit);
+    assertNotEquals(unit, getTestItem().getOwner());
+  }
+
+
+
+
 
   /**
    * @return a unit that can equip the item being tested

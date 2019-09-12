@@ -95,11 +95,9 @@ public abstract class AbstractUnit implements IUnit {
     }
 
   public void addItem(IEquipableItem item) {
-    if(this.items.size()<this.maxItems){
+    if(this.items.size()<this.maxItems && item!=null){
       this.items.add(item);
-      item.setOwner(this);
-    }
-  }
+      item.setOwner(this);}}
 
   @Override
   public Location getLocation() {
@@ -125,16 +123,17 @@ public abstract class AbstractUnit implements IUnit {
   }
   @Override
   public boolean isInRange(IUnit other) {
-      return this.getEquippedItem().getMinRange() <= this.getLocation().distanceTo(other.getLocation())
-              && this.getLocation().distanceTo(other.getLocation()) <= this.getEquippedItem().getMaxRange();
-  }
+      if(getEquippedItem()!=null){
+      return (this.getEquippedItem().getMinRange() <= this.getLocation().distanceTo(other.getLocation()))
+              && (this.getLocation().distanceTo(other.getLocation()) <= this.getEquippedItem().getMaxRange());}
+      else return false; }
   @Override
   public void attack(IUnit other) {
       int vidainicial = other.getCurrentHitPoints();
       if(getCurrentHitPoints()>0 && other.getCurrentHitPoints()>0){
       if(getEquippedItem()!=null && isInRange(other)){
         getEquippedItem().attack(other);
-        if(other.getCurrentHitPoints()>0 && vidainicial>other.getCurrentHitPoints()){other.counterAttack(this);}}
+        if(other.getEquippedItem()!=null && other.getCurrentHitPoints()>0 && vidainicial>other.getCurrentHitPoints()){other.counterAttack(this);}}
   }}
 
   @Override
