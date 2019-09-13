@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>model.items</OriginalElement>
+  <nodes>
+    <node x="0.0" y="737.0">model.items.Spear</node>
+    <node x="638.0" y="737.0">model.items.Staff</node>
+    <node x="1212.0" y="737.0">model.items.Sword</node>
+    <node x="707.0" y="342.0">model.items.AbstractItem</node>
+    <node x="808.0" y="704.0">model.items.Oscuridad</node>
+    <node x="1042.0" y="737.0">model.items.Bow</node>
+    <node x="1382.0" y="737.0">model.items.Axe</node>
+    <node x="404.0" y="704.0">model.items.Luz</node>
+    <node x="707.0" y="0.0">model.items.IEquipableItem</node>
+    <node x="170.0" y="704.0">model.items.Anima</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="model.items.Oscuridad" target="model.items.AbstractItem">
+      <point x="0.0" y="-69.0" />
+      <point x="915.0" y="684.0" />
+      <point x="827.375" y="684.0" />
+      <point x="13.375" y="146.0" />
+    </edge>
+    <edge source="model.items.Spear" target="model.items.AbstractItem">
+      <point x="0.0" y="-36.0" />
+      <point x="75.0" y="654.0" />
+      <point x="720.375" y="654.0" />
+      <point x="-93.625" y="146.0" />
+    </edge>
+    <edge source="model.items.Anima" target="model.items.AbstractItem">
+      <point x="0.0" y="-69.0" />
+      <point x="277.0" y="664.0" />
+      <point x="747.125" y="664.0" />
+      <point x="-66.875" y="146.0" />
+    </edge>
+    <edge source="model.items.Bow" target="model.items.AbstractItem">
+      <point x="0.0" y="-36.0" />
+      <point x="1117.0" y="674.0" />
+      <point x="854.125" y="674.0" />
+      <point x="40.125" y="146.0" />
+    </edge>
+    <edge source="model.items.Staff" target="model.items.AbstractItem">
+      <point x="0.0" y="-36.0" />
+      <point x="713.0" y="684.0" />
+      <point x="800.625" y="684.0" />
+      <point x="-13.375" y="146.0" />
+    </edge>
+    <edge source="model.items.Luz" target="model.items.AbstractItem">
+      <point x="0.0" y="-69.0" />
+      <point x="511.0" y="674.0" />
+      <point x="773.875" y="674.0" />
+      <point x="-40.125" y="146.0" />
+    </edge>
+    <edge source="model.items.Axe" target="model.items.AbstractItem">
+      <point x="0.0" y="-36.0" />
+      <point x="1457.0" y="654.0" />
+      <point x="907.625" y="654.0" />
+      <point x="93.625" y="146.0" />
+    </edge>
+    <edge source="model.items.Sword" target="model.items.AbstractItem">
+      <point x="0.0" y="-36.0" />
+      <point x="1287.0" y="664.0" />
+      <point x="880.875" y="664.0" />
+      <point x="66.875" y="146.0" />
+    </edge>
+    <edge source="model.items.AbstractItem" target="model.items.IEquipableItem">
+      <point x="0.0" y="-146.0" />
+      <point x="0.0" y="146.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="763.5" y="889.0" />
+  <SelectedNodes>
+    <node>model.items.Spear</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Methods</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
