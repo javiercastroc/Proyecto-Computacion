@@ -28,7 +28,7 @@ public interface ITestUnit {
   /**
    * Creates a set of testing weapons
    */
-  void setWeapons();
+  void setCombat();
 
   /**
    * Checks that the constructor works properly.
@@ -95,16 +95,26 @@ public interface ITestUnit {
   @Test
   void equipAnimaTest();
 
+  /**
+   * @return the test anima spellbook
+   */
+
   Anima getAnima();
 
   @Test
   void equipLuzTest();
 
+  /**
+   * @return the test luz spellbook
+   */
   Luz getLuz();
 
   @Test
   void equipOscuridadTest();
 
+  /**
+   * @return the test oscuridad spellbook
+   */
   Oscuridad getOscuridad();
 
   /**
@@ -123,8 +133,8 @@ public interface ITestUnit {
    */
   Alpaca getTargetAlpaca();
 
-  @Test
-  void inRangeTest();
+@Test
+  void equipTest();
 
 
 

@@ -27,6 +27,9 @@ public class SorcererOscuridadTest extends AbstractTestUnit {
         return sorcererOscuridad;
     }
 
+    /**
+     * checks how a oscuridad spellbook is equipped
+     */
     @Override
     @Test
     public void equipOscuridadTest() {
@@ -38,8 +41,7 @@ public class SorcererOscuridadTest extends AbstractTestUnit {
         sorcererOscuridad.equipItem(spear);
         assertNotEquals(spear,sorcererOscuridad.getEquippedItem());
     }
+    @Override
     @Test
-    public void combatTest(){
-
-    }
+    public void equipTest() {}
 }

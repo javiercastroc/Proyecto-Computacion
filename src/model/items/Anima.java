@@ -38,19 +38,31 @@ public class Anima extends AbstractItem {
         other.receiveAnimaAttack(this);
     }
 
+    /**
+     * the owner recieves an attack with high damage
+     * oscuridad is weak against anima
+     * @param attack
+     */
     @Override
     public void oscuridadVS(AbstractItem attack){
         (this.getOwner()).mayor(attack);}
 
+    /**
+     * the owner recieves an attack with low damage
+     * luz is strong against anima
+     * @param attack
+     */
     @Override
     public void luzVS(AbstractItem attack){
         (this.getOwner()).menor(attack);}
 
+    /**
+     * the owner recieves an attack with normal bamage
+     * anima is normal agains anima
+     * @param attack
+     */
     @Override
     public void animaVS(AbstractItem attack){
-        (this.getOwner()).normal(attack);}
-
-
-    @Override
-    public void heal(IUnit other) {}
+        (this.getOwner()).normal(attack);
+}
 }

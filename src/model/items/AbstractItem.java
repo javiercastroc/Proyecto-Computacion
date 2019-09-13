@@ -70,4 +70,19 @@ public abstract class AbstractItem implements IEquipableItem {
   public int getMaxRange() {
     return maxRange;
   }
+  @Override
+  public void heal(IUnit other) {}
+
+  @Override
+  public void oscuridadVS(AbstractItem attack) { }
+
+  @Override
+  public void luzVS(AbstractItem attack) { }
+
+  @Override
+  public void animaVS(AbstractItem attack) {}
+
+  @Override
+  public void attack(IUnit other) { }
+
 }

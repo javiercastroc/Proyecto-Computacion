@@ -38,16 +38,4 @@ public class Spear extends AbstractItem {
   public void attack(IUnit other) {
       other.receiveSpearAttack(this);
   }
-
-    @Override
-    public void heal(IUnit other) {}
-
-    @Override
-    public void oscuridadVS(AbstractItem attack) { }
-
-    @Override
-    public void luzVS(AbstractItem attack) { }
-
-    @Override
-    public void animaVS(AbstractItem attack) { }
 }

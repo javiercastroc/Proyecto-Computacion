@@ -141,6 +141,10 @@ public class StaffTest extends AbstractTestItem {
     assertEquals(100, alpaca.getCurrentHitPoints());
   }
 
+  /**
+   * check if methods luzVS, oscuridadVS, animaVS don't change things/parameters
+   * in corresponding units (all - sorcerer)
+   */
   @Test
   public void VSTest(){
     fighter=new Fighter(100, 5, new Location(0, 0));

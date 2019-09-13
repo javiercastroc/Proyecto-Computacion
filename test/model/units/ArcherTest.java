@@ -48,6 +48,10 @@ public class ArcherTest extends AbstractTestUnit {
     archer.equipItem(bow);
     assertEquals(bow,archer.getEquippedItem());
   }
+
+  /**
+   * checks minimum range of bow
+   */
   @Test
   public void lowRangeTest() {
     archer.addItem(bow);
@@ -55,6 +59,10 @@ public class ArcherTest extends AbstractTestUnit {
     assertFalse(archer.isInRange(getTargetAlpaca()));
   }
 
+  /** check how method equipItem works with all kind of items
+   * for archers
+   */
+  @Override
   @Test
   public void equipTest() {
     Axe axes;
@@ -107,6 +115,9 @@ public class ArcherTest extends AbstractTestUnit {
     assertNull(archer.getEquippedItem());
     archer.items.remove(oscuridad);}
 
+  /**
+   * Checks that the methods mayor, normal, menor don't produce bugs
+   */
   @Test
   public void mmmTest(){
     Bow bow = new Bow("Bow", 20, 2, 3);

@@ -76,6 +76,10 @@ class OscuridadTest extends AbstractTestItem {
         return sorcererOscuridad;
     }
 
+    /**
+     * check attack behavior (without combat or counterattack) against all classes of units
+     *
+     */
     @Test
     public void attackTest() {
         fighter=new Fighter(100, 5, new Location(0, 0));

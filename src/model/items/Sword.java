@@ -38,15 +38,4 @@ public class Sword extends AbstractItem {
   public void attack(IUnit other) {
     other.receiveSwordAttack(this);
   }
-  @Override
-  public void heal(IUnit other) {}
-
-  @Override
-  public void oscuridadVS(AbstractItem attack) {}
-
-  @Override
-  public void luzVS(AbstractItem attack) {}
-
-  @Override
-  public void animaVS(AbstractItem attack) {}
 }

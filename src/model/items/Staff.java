@@ -34,20 +34,7 @@ public class Staff extends AbstractItem {
     unit.equipStaff(this);}
   }
 
-  @Override
-  public void attack(IUnit other) {
-  }
-
   public void heal(IUnit other) {
-    other.receiveStaffHeal(this);
-  }
+    other.receiveStaffHeal(this);}
 
-  @Override
-  public void oscuridadVS(AbstractItem attack) { }
-
-  @Override
-  public void luzVS(AbstractItem attack) { }
-
-  @Override
-  public void animaVS(AbstractItem attack) { }
 }

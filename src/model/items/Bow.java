@@ -39,16 +39,4 @@ public class Bow extends AbstractItem {
   public void attack(IUnit other) {
     other.receiveBowAttack(this);
   }
-
-  @Override
-  public void heal(IUnit other) {}
-
-  @Override
-  public void oscuridadVS(AbstractItem attack) {}
-
-  @Override
-  public void luzVS(AbstractItem attack) { }
-
-  @Override
-  public void animaVS(AbstractItem attack) { }
 }

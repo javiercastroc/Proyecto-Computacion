@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * @author Ignacio Slater Muñoz
+ * @author Javier Castro Cuevas
  */
 public class HeroTest extends AbstractTestUnit {
 
@@ -28,6 +28,9 @@ public class HeroTest extends AbstractTestUnit {
     return hero;
   }
 
+  /**
+   * checks if a spear is equipped correctly
+   */
   @Override
   @Test
   public void equipSpearTest() {
@@ -39,8 +42,13 @@ public class HeroTest extends AbstractTestUnit {
     hero.equipItem(spear);
     assertEquals(spear,hero.getEquippedItem());
   }
+
+  /** check how method equipItem works with all kind of items
+   * for heroes
+   */
+  @Override
   @Test
-  void equipTest() {
+  public void equipTest() {
     Axe axes;
     Sword sword;
     Staff staff;
@@ -90,6 +98,9 @@ public class HeroTest extends AbstractTestUnit {
     assertEquals(hero.getEquippedItem(),spear);
     hero.items.remove(spear);}
 
+  /**
+   * Checks that the methods mayor, normal, menor don't produce bugs
+   */
   @Test
   public void mmmTest(){
     Bow bow = new Bow("Bow", 20, 2, 3);

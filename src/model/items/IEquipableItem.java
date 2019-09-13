@@ -27,7 +27,12 @@ public interface IEquipableItem {
    */
   IUnit getOwner();
 
-
+  /**
+   * Sets the owner of this item. (sets parameter owner of this item)
+   *
+   * @param unit
+   *     the unit that will be the owner of this item
+   */
  void setOwner(IUnit unit);
 
   /**
@@ -50,12 +55,39 @@ public interface IEquipableItem {
    */
   int getMaxRange();
 
+  /**
+   * attack other unit with this item
+   *
+   * @param other unit to attack
+   */
   void attack(IUnit other);
-  void heal(IUnit other);
 
+  /**
+   * heals other unit with this item
+   *
+   * @param other unit to heal
+   */
+    void heal(IUnit other);
+
+
+    /**
+     * send a message to this item; that is being attacked with an oscuridad item
+     *
+     * @param attack, item that is attacking
+     */
   void oscuridadVS(AbstractItem attack);
 
+  /**
+   * send a message to this item; that is being attacked with a luz item
+   *
+   * @param attack, item that is attacking
+   */
   void luzVS(AbstractItem attack);
 
+  /**
+   * send a message to this item; that is being attacked with a anima item
+   *
+   * @param attack, item that is attacking
+   */
   void animaVS(AbstractItem attack);
 }

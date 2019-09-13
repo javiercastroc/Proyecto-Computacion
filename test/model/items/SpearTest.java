@@ -84,6 +84,10 @@ public class SpearTest extends AbstractTestItem {
     return hero;
   }
 
+  /**
+   * check attack behavior (without combat or counterattack) against all classes of units
+   *
+   */
   @Test
   public void attackTest() {
     fighter=new Fighter(100, 5, new Location(0, 0));
@@ -140,6 +144,11 @@ public class SpearTest extends AbstractTestItem {
     spear.heal(alpaca);
     assertEquals(80, alpaca.getCurrentHitPoints());
   }
+
+  /**
+   * check if methods luzVS, oscuridadVS, animaVS don't change things/parameters
+   * in corresponding units (all - sorcerer)
+   */
   @Test
   public void VSTest(){
     fighter=new Fighter(100, 5, new Location(0, 0));
@@ -153,6 +162,9 @@ public class SpearTest extends AbstractTestItem {
     assertEquals(100, fighter.getCurrentHitPoints());
 
   }
+  /**
+   * check attack behavior with combat/counterattack against all classes of units (equipped)
+   */
   @Test
   public void combatTest() {
     Location location1 = new Location(0, 0);
@@ -220,4 +232,5 @@ public class SpearTest extends AbstractTestItem {
     assertEquals(70, swordMaster.getCurrentHitPoints());
     assertEquals(90, hero.getCurrentHitPoints());
   }
+
 }

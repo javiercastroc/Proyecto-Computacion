@@ -2,6 +2,7 @@ package model.items;
 
 import model.map.Location;
 import model.units.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -42,7 +43,6 @@ class AnimaTest extends AbstractTestItem {
         expectedMaxRange = 5;
         anima = new Anima(expectedName, expectedPower, expectedMinRange, expectedMaxRange);
     }
-
     /**
      * Sets up an item with wrong ranges setted.
      */
@@ -77,6 +77,10 @@ class AnimaTest extends AbstractTestItem {
         return sorcererAnima;
     }
 
+    /**
+     * check attack behavior (without combat or counterattack) against all classes of units
+     *
+     */
     @Test
     public void attackTest() {
 
@@ -135,7 +139,9 @@ class AnimaTest extends AbstractTestItem {
         assertEquals(80, alpaca.getCurrentHitPoints());
     }
 
-
+    /**
+     * check combat with alpaca /testing spellbook damage without "defense"
+     */
     @Test void combatAlpacaTest() {
         Alpaca alpacaa = new Alpaca(50, 2, field.getCell(0, 1));
         Sorcerer sorc  = new Sorcerer(50, 2, field.getCell(0, 0));
@@ -146,5 +152,62 @@ class AnimaTest extends AbstractTestItem {
         assertEquals(sorc.getEquippedItem(),animas);
         assertTrue(sorc.getLocation().isNeighbour(alpacaa.getLocation()));
         assertEquals(alpacaa.getMaxHitPoints()-getExpectedBasePower(),alpacaa.getCurrentHitPoints());
+    }
+
+    /**
+     * check attack behavior with combat/counterattack against all classes of units (without weapons / equip=null)
+     */
+    @Test
+    public void combatWWTest() {
+        Location location1 = new Location(0, 0);
+        Location location2 = new Location(0, 1);
+        location1.addNeighbour(location2);
+        fighter=new Fighter(100, 5, location1);
+        alpaca=new Alpaca(100, 5, location1);
+        archer=new Archer(100, 5, location1);
+        cleric=new Cleric(100, 5, location1);
+        hero=new Hero(100, 5, location1);
+        swordMaster=new SwordMaster(100, 5, location1);
+        sorcererLuz=new Sorcerer(100, 5, location1);
+        sorcererAnima=new Sorcerer(100, 5, location2);
+        sorcererOscuridad=new Sorcerer(100, 5, location1);
+        this.axes = new Axe("Axe", 20, 1, 2);
+        this.sword = new Sword("Sword", 20, 1, 2);
+        this.spear = new Spear("Spear", 20, 1, 2);
+        this.staff = new Staff("Staff", 20, 1, 2);
+        this.bow = new Bow("Bow", 20, 2, 3);
+        this.anima = new Anima("Anima", 20, 1, 2);
+        this.luz = new Luz("Luz", 20, 1, 2);
+        this.oscuridad = new Oscuridad("Oscuridad", 20, 1, 2);
+        sorcererAnima.addItem(anima);
+        sorcererAnima.equipItem(anima);
+        sorcererAnima.attack(alpaca);
+        assertEquals(sorcererAnima.getLocation().distanceTo(alpaca.getLocation()),1);
+        assertTrue(sorcererAnima.isInRange(alpaca));
+        assertEquals(80, alpaca.getCurrentHitPoints());
+        assertEquals(100, sorcererAnima.getCurrentHitPoints());
+        sorcererAnima.attack(archer);
+        assertEquals(80, archer.getCurrentHitPoints());
+        assertEquals(100, sorcererAnima.getCurrentHitPoints());
+        sorcererAnima.attack(cleric);
+        assertEquals(80, cleric.getCurrentHitPoints());
+        assertEquals(100, sorcererAnima.getCurrentHitPoints());
+        sorcererAnima.attack(fighter);
+        assertEquals(80, fighter.getCurrentHitPoints());
+        assertEquals(100, sorcererAnima.getCurrentHitPoints());
+        sorcererAnima.attack(hero);
+        assertEquals(80, hero.getCurrentHitPoints());
+        assertEquals(100, sorcererAnima.getCurrentHitPoints());
+        sorcererAnima.attack(sorcererAnima);
+        assertEquals(100, sorcererAnima.getCurrentHitPoints());
+        sorcererAnima.attack(sorcererLuz);
+        assertEquals(80, sorcererLuz.getCurrentHitPoints());
+        assertEquals(100, sorcererAnima.getCurrentHitPoints());
+        sorcererAnima.attack(sorcererOscuridad);
+        assertEquals(80, sorcererOscuridad.getCurrentHitPoints());
+        assertEquals(100, sorcererAnima.getCurrentHitPoints());
+        sorcererAnima.attack(swordMaster);
+        assertEquals(80, swordMaster.getCurrentHitPoints());
+        assertEquals(100, sorcererAnima.getCurrentHitPoints());
     }
 }

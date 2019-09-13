@@ -25,6 +25,15 @@ public abstract class AbstractTestUnit implements ITestUnit {
   protected Anima anima;
   protected Luz luz;
   protected Oscuridad oscuridad;
+  protected Fighter fighter;
+  protected Alpaca alpaca;
+  protected Archer archer;
+  protected Cleric cleric;
+  protected Hero hero;
+  protected SwordMaster swordMaster;
+  protected Sorcerer sorcererLuz;
+  protected Sorcerer sorcererAnima;
+  protected Sorcerer sorcererOscuridad;
 
 
   @Override
@@ -40,7 +49,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
     setField();
     setTestUnit();
     setTargetAlpaca();
-    setWeapons();
+    setCombat();
   }
 
   /**
@@ -65,7 +74,19 @@ public abstract class AbstractTestUnit implements ITestUnit {
    * Creates a set of testing weapons
    */
   @Override
-  public void setWeapons() {
+  public void setCombat() {
+    Location location1 = new Location(0, 0);
+    Location location2 = new Location(0, 1);
+    location1.addNeighbour(location2);
+    fighter = new Fighter(100, 5, location1);
+    alpaca = new Alpaca(100, 5, location1);
+    archer = new Archer(100, 5, location1);
+    cleric = new Cleric(100, 5, location1);
+    hero = new Hero(100, 5, location1);
+    swordMaster = new SwordMaster(100, 5, location1);
+    sorcererLuz = new Sorcerer(100, 5, location1);
+    sorcererAnima = new Sorcerer(100, 5, location2);
+    sorcererOscuridad = new Sorcerer(100, 5, location1);
     this.axe = new Axe("Axe", 20, 1, 2);
     this.sword = new Sword("Sword", 20, 1, 2);
     this.spear = new Spear("Spear", 20, 1, 2);
@@ -75,7 +96,6 @@ public abstract class AbstractTestUnit implements ITestUnit {
     this.luz = new Luz("Luz", 20, 1, 2);
     this.oscuridad = new Oscuridad("Oscuridad", 20, 1, 2);
   }
-
   /**
    * Checks that the constructor works properly.
    */
@@ -126,6 +146,9 @@ public abstract class AbstractTestUnit implements ITestUnit {
     return axe;
   }
 
+  /**
+   * Checks if the sword is equipped correctly to the unit
+   */
   @Override
   @Test
   public void equipSwordTest() {
@@ -140,6 +163,9 @@ public abstract class AbstractTestUnit implements ITestUnit {
     return sword;
   }
 
+  /**
+   * Checks if the spear is equipped correctly to the unit
+   */
   @Override
   @Test
   public void equipSpearTest() {
@@ -154,6 +180,9 @@ public abstract class AbstractTestUnit implements ITestUnit {
     return spear;
   }
 
+  /**
+   * Checks if the staff is equipped correctly to the unit
+   */
   @Override
   @Test
   public void equipStaffTest() {
@@ -168,6 +197,9 @@ public abstract class AbstractTestUnit implements ITestUnit {
     return staff;
   }
 
+  /**
+   * Checks if the bow is equipped correctly to the unit
+   */
   @Override
   @Test
   public void equipBowTest() {
@@ -183,6 +215,10 @@ public abstract class AbstractTestUnit implements ITestUnit {
   }
 
 
+
+  /**
+   * Checks if the anima spellbook is equipped correctly to the unit
+   */
   @Override
   @Test
   public void equipAnimaTest() {
@@ -197,6 +233,9 @@ public abstract class AbstractTestUnit implements ITestUnit {
     return anima;
   }
 
+  /**
+   * Checks if the luz spellbook is equipped correctly to the unit
+   */
   @Override
   @Test
   public void equipLuzTest() {
@@ -211,6 +250,9 @@ public abstract class AbstractTestUnit implements ITestUnit {
     return luz;
   }
 
+  /**
+   * Checks if the oscuridad spellbook is equipped correctly to the unit
+   */
   @Override
   @Test
   public void equipOscuridadTest() {
@@ -260,12 +302,9 @@ public abstract class AbstractTestUnit implements ITestUnit {
     return targetAlpaca;
   }
 
-  @Test
-  public void inRangeTest(){
-    getTestUnit().addItem(null);
-    assertNull(getTestUnit().getEquippedItem());
-    assertFalse(getTestUnit().isInRange(getTargetAlpaca()));
-  }
+  /**
+   * Checks if Unit without equipped weapon an attack doesn't make changes
+   */
   @Test
   public void attackWithoutWeaponTest(){
     getTestUnit().addItem(null);

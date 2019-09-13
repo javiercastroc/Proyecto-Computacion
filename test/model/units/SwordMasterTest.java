@@ -29,6 +29,9 @@ public class SwordMasterTest extends AbstractTestUnit {
     return swordMaster;
   }
 
+  /**
+   * checks if a sword is equipped correctly
+   */
   @Override
   public void equipSwordTest() {
     assertNull(swordMaster.getEquippedItem());
@@ -36,6 +39,9 @@ public class SwordMasterTest extends AbstractTestUnit {
     assertEquals(sword, swordMaster.getEquippedItem());
   }
 
+  /** check how method equipItem works with all kind of items
+   * for swordmasters
+   */
   @Test
   public void equipTest() {
     Axe axes;
@@ -87,6 +93,10 @@ public class SwordMasterTest extends AbstractTestUnit {
     assertEquals(swordMaster.getEquippedItem(),sword);
     swordMaster.items.remove(sword);}
 
+
+  /**
+   * Checks that the methods mayor, normal, menor don't produce bugs
+   */
   @Test
   public void mmmTest(){
     Bow bow = new Bow("Bow", 20, 2, 3);

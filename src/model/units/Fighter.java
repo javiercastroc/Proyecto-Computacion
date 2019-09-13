@@ -7,7 +7,7 @@ import model.map.Location;
  * This class represents a fighter type unit.
  * A fighter is a unit that can only use axe type weapons.
  *
- * @author Ignacio Slater Muñoz
+ * @author Javier Castro
  * @since 1.0
  */
 public class Fighter extends AbstractUnit {
@@ -25,39 +25,8 @@ public class Fighter extends AbstractUnit {
    */
 
 
-  @Override
   public void equipAxe(final Axe axe) {
         equippedItem =axe; }
-
-  @Override
-  public void equipBow(final Bow bow) {}
-
-  @Override
-  public void equipSpear(final Spear spear) {}
-
-  @Override
-  public void equipStaff(final Staff staff) {}
-
-  @Override
-    public void equipSword(final Sword sword) {}
-
-  @Override
-  public void equipAnima(final Anima anima) {}
-
-  @Override
-  public void equipOscuridad(final Oscuridad oscuridad) {}
-
-  @Override
-  public void equipLuz(final Luz luz) {}
-
-    @Override
-    public void normal(IEquipableItem attack) { }
-
-    @Override
-    public void mayor(IEquipableItem attack) { }
-
-    @Override
-    public void menor(IEquipableItem attack) {}
 
   @Override
   public void receiveSpearAttack(Spear attack) {
@@ -71,10 +40,6 @@ public class Fighter extends AbstractUnit {
           receiveWeaknessAttack(attack);
       }
   }
-    @Override
-    public void receiveStaffHeal(Staff attack) {
-        receiveHeal(attack);
-    }
 
   @Override
   public void receiveAnimaAttack(Anima attack) {
@@ -91,6 +56,7 @@ public class Fighter extends AbstractUnit {
     }
     else receiveAttack(attack);
   }
+
   @Override
   public void receiveOscuridadAttack(Oscuridad attack) {
     if (getEquippedItem() != null) {

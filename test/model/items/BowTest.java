@@ -93,6 +93,10 @@ public class BowTest extends AbstractTestItem {
     return archer;
   }
 
+  /**
+   * check attack behavior (without combat or counterattack) against all classes of units
+   *
+   */
   @Test
   public void attackTest() {
     fighter=new Fighter(100, 5, new Location(0, 0));
@@ -150,6 +154,10 @@ public class BowTest extends AbstractTestItem {
     assertEquals(80, alpaca.getCurrentHitPoints());
   }
 
+  /**
+   * check if methods luzVS, oscuridadVS, animaVS don't change things/parameters
+   * in corresponding units (all - sorcerer)
+   */
   @Test
   public void VSTest(){
     fighter=new Fighter(100, 5, new Location(0, 0));

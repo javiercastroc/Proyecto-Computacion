@@ -27,6 +27,9 @@ public class SorcererLuzTest extends AbstractTestUnit {
         return sorcererLuz;
     }
 
+    /**
+     * checks how a luz spellbook is equipped
+     */
     @Override
     @Test
     public void equipLuzTest() {
@@ -38,4 +41,7 @@ public class SorcererLuzTest extends AbstractTestUnit {
         sorcererLuz.equipItem(luz);
         assertEquals(luz,sorcererLuz.getEquippedItem());
     }
+    @Override
+    @Test
+    public void equipTest() {}
 }

@@ -41,6 +41,9 @@ public abstract class AbstractTestItem {
     setTargetAlpaca();
   }
 
+  /**
+   * Sets up the the space/field to test
+   */
   public void setField() {
     this.field = new Field();
     this.field.addCells(true, new Location(0, 0), new Location(0, 1), new Location(0, 2),
@@ -128,6 +131,10 @@ public abstract class AbstractTestItem {
     getTestItem().equipTo(unit);
     assertEquals(unit, getTestItem().getOwner());
   }
+
+  /**
+   * Checks that the Item null not causes a bug
+   */
   @Test
   public void equipNullTest(){
     assertNull(getTestItem().getOwner());
@@ -139,6 +146,9 @@ public abstract class AbstractTestItem {
     assertTrue(unit.getItems().contains(getTestItem()));
   }
 
+  /**
+   * Checks that the Item cannot be equipped to other iwner
+   */
   @Test
   public void equipOtherTest() {
     assertNull(getTestItem().getOwner());
@@ -148,8 +158,19 @@ public abstract class AbstractTestItem {
     assertNotEquals(unit, getTestItem().getOwner());
   }
 
-
-
+  /**
+   * Checks that the Item can equip correctly to a unit
+   */
+  @Test
+  public void equipToTest() {
+    assertNull(getTestItem().getOwner());
+    IUnit unit = getTestUnit();
+    unit.addItem(getTestItem());
+    assertEquals(getTestItem().getOwner(),unit);
+    assertTrue(unit.getItems().contains(getTestItem()));
+    assertNull(unit.getEquippedItem());
+    getTestItem().equipTo(getTestUnit());
+    assertEquals(unit.getEquippedItem(),getTestItem());}
 
 
   /**

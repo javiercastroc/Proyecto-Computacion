@@ -28,6 +28,9 @@ public class SorcererAnimaTest extends AbstractTestUnit {
         return sorcererAnima;
     }
 
+    /**
+     * checks how a anima spellbook is equipped
+     */
     @Override
     @Test
     public void equipAnimaTest() {
@@ -39,6 +42,13 @@ public class SorcererAnimaTest extends AbstractTestUnit {
         sorcererAnima.equipItem(anima);
         assertEquals(anima,sorcererAnima.getEquippedItem());
     }
+
+
+    /** check how method equipItem works with all kind of items
+     * (for sorcerers)
+     *
+     */
+    @Override
     @Test
     public void equipTest() {
         Axe axes;

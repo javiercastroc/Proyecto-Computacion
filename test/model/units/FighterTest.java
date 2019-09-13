@@ -47,6 +47,10 @@ public class FighterTest extends AbstractTestUnit {
     assertEquals(axe,fighter.getEquippedItem());
   }
 
+  /**
+   * Checks if an alpaca can recieve as much items as it deserves
+   * also check max container of fighter
+   */
   @Test
   public void giveTest() {
     chargerAlpaca=new Alpaca(50, 2, field.getCell(0, 1));
@@ -66,6 +70,10 @@ public class FighterTest extends AbstractTestUnit {
     fighter.giveItem(null,chargerAlpaca);
   }
 
+  /** check if alpaca is in range (depends on the weapon)
+   *
+   *
+   */
   @Test
   public void isInRange() {
     fighter.addItem(axe);
@@ -73,6 +81,12 @@ public class FighterTest extends AbstractTestUnit {
     assertTrue(fighter.isInRange(getTargetAlpaca()));
   }
 
+
+  /** check how method equipItem works with all kind of items
+   * (for fighters)
+   *
+   */
+  @Override
   @Test
   public void equipTest() {
     Axe axes;
@@ -124,6 +138,9 @@ public class FighterTest extends AbstractTestUnit {
     assertEquals(fighter.getEquippedItem(),axes);
     fighter.items.remove(axes);}
 
+  /**
+   * Checks that the methods mayor, normal, menor don't produce bugs
+   */
   @Test
   public void mmmTest(){
     Bow bow = new Bow("Bow", 20, 2, 3);

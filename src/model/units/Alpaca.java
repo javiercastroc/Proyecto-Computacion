@@ -14,7 +14,6 @@ import model.map.Location;
  */
 public class Alpaca extends AbstractUnit {
 
-
   /**
    * Creates a new Alpaca.
    *
@@ -35,65 +34,4 @@ public class Alpaca extends AbstractUnit {
    * <p>
    * The <i>Alpaca</i> cannot equip any item.
    */
-  @Override
-  public void equipAxe(final Axe axe) {}
-
-  @Override
-  public void equipBow(final Bow bow) { }
-
-  @Override
-  public void equipSpear(final Spear spear) { }
-
-  @Override
-  public void equipStaff(final Staff staff) {}
-
-  @Override
-  public void equipSword(final Sword sword) {}
-
-  @Override
-  public void receiveStaffHeal(Staff attack) {
-    receiveHeal(attack);
-  }
-
-
-  @Override
-  public void equipAnima(final Anima anima) {}
-
-  @Override
-  public void equipOscuridad(final Oscuridad oscuridad) {}
-
-  @Override
-  public void equipLuz(final Luz luz) {}
-
-  @Override
-  public void normal(IEquipableItem attack) { }
-
-  @Override
-  public void mayor(IEquipableItem attack) { }
-
-  @Override
-  public void menor(IEquipableItem attack) {}
-
-  @Override
-  public void receiveAnimaAttack(Anima attack) {
-    if (getEquippedItem() != null) {
-      receiveWeaknessAttack(attack);
-    }
-    else receiveAttack(attack);
-  }
-
-  @Override
-  public void receiveLuzAttack(Luz attack) {
-    if (getEquippedItem() != null) {
-      receiveWeaknessAttack(attack);
-    }
-    else receiveAttack(attack);
-  }
-  @Override
-  public void receiveOscuridadAttack(Oscuridad attack) {
-    if (getEquippedItem() != null) {
-      receiveWeaknessAttack(attack);
-    }
-    else receiveAttack(attack);
-  }
 }

@@ -38,18 +38,30 @@ public class Luz extends AbstractItem {
         other.receiveLuzAttack(this);
     }
 
+    /**
+     * the owner recieves an attack with low damage
+     * luz is strong against oscuridad
+     * @param attack
+     */
     @Override
     public void oscuridadVS(AbstractItem attack){
         (this.getOwner()).menor(attack);}
 
+    /**
+     * the owner recieves an attack with normal damage
+     * luz is normal against luz
+     * @param attack
+     */
     @Override
     public void luzVS(AbstractItem attack){
         (this.getOwner()).normal(attack);}
 
+    /**
+     * the owner recieves an attack with high damage
+     * luz is weak against anima
+     * @param attack
+     */
     @Override
     public void animaVS(AbstractItem attack){
         (this.getOwner()).mayor(attack);}
-
-    @Override
-    public void heal(IUnit other) {}
 }

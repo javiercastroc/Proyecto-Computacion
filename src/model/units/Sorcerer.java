@@ -21,23 +21,9 @@ public class Sorcerer extends AbstractUnit {
     /**
      * Sets the currently equipped item of this unit.
      *
-     * @param axe
+     * @param luz
      *     the item to equip
      */
-    @Override
-    public void equipAxe(final Axe axe) {}
-
-    @Override
-    public void equipBow(final Bow bow) {}
-
-    @Override
-    public void equipSpear(final Spear spear) {}
-
-    @Override
-    public void equipStaff(final Staff staff) {}
-
-    @Override
-    public void equipSword(final Sword sword) {}
 
     @Override
     public void equipLuz(final Luz luz) {
@@ -51,6 +37,12 @@ public class Sorcerer extends AbstractUnit {
     public void equipAnima(final Anima anima) {
         equippedItem=anima;}
 
+    /**
+     * receives an oscuridad attack
+     * and check whether this sorcerer has equipped an item
+     * and what type is that item
+     * @param attack oscuridad spellbook
+     */
     @Override
     public void receiveOscuridadAttack(Oscuridad attack){
         if (getEquippedItem() != null) {
@@ -58,6 +50,12 @@ public class Sorcerer extends AbstractUnit {
         else receiveAttack(attack);
     }
 
+    /**
+     * receives a luz attack
+     * and check whether this sorcerer has equipped an item
+     * and what type is that item
+     * @param attack luz spellbook
+     */
     @Override
     public void receiveLuzAttack(Luz attack){
         if (getEquippedItem() != null) {
@@ -65,6 +63,12 @@ public class Sorcerer extends AbstractUnit {
         else receiveAttack(attack);
     }
 
+    /**
+     * receives an anima attack
+     * and check whether this sorcerer has equipped an item
+     * and what type is that item
+     * @param attack anima spellbook
+     */
     @Override
     public void receiveAnimaAttack(Anima attack){
         if (getEquippedItem() != null) {
@@ -101,17 +105,26 @@ public class Sorcerer extends AbstractUnit {
         }
         else receiveAttack(attack);
     }
-    @Override
-    public void receiveStaffHeal(Staff attack) {
-        receiveHeal(attack);
-    }
 
+    /**
+     *recieves an attack with normal damage
+     * @param attack
+     */
     public void normal(IEquipableItem attack){
         receiveAttack(attack);
     }
+
+    /**
+     * recieves an attack with high damage
+     * @param attack
+     */
     public void mayor(IEquipableItem attack){
         receiveWeaknessAttack(attack);
     }
+    /**
+     * recieves an attack with low damage
+     * @param attack
+     */
     public void menor(IEquipableItem attack){
         receiveResistantAttack(attack);
     }

@@ -2,12 +2,13 @@ package model.units;
 
 import model.items.*;
 import model.map.Location;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * @author Ignacio Slater Muñoz
+ * @author Javier Castro Cuevas
  */
 public class ClericTest extends AbstractTestUnit {
 
@@ -28,7 +29,18 @@ public class ClericTest extends AbstractTestUnit {
   public IUnit getTestUnit() {
     return cleric;
   }
+  @BeforeEach
+  public void setUp() {
+    setField();
+    setTestUnit();
+    setTargetAlpaca();
+    setCombat();
+  }
 
+  /**
+   *
+   * checks how a staff is equipped
+   */
   @Test
   @Override
   public void equipStaffTest() {
@@ -40,6 +52,11 @@ public class ClericTest extends AbstractTestUnit {
     cleric.equipItem(staff);
     assertEquals(staff,cleric.getEquippedItem());
   }
+  /** check how method equipItem works with all kind of items
+   * (for clerics)
+   *
+   */
+  @Override
   @Test
   public void equipTest() {
     Axe axes;
@@ -91,6 +108,9 @@ public class ClericTest extends AbstractTestUnit {
     assertEquals(cleric.getEquippedItem(),staff);
     cleric.items.remove(staff);}
 
+  /**
+   * checks general behavior of healing in all classes of units
+   */
   @Test
   public void healTest() {
     Fighter fighter = new Fighter(100, 5, new Location(0, 1));
@@ -132,6 +152,12 @@ public class ClericTest extends AbstractTestUnit {
     assertEquals(100,swordMaster.getCurrentHitPoints());
     assertEquals(100,sorcerer.getCurrentHitPoints());
   }
+
+  /**
+   * checks healing behavior
+   * checks if a unit with currentHitpints = 0 then a healing doesn't affect the unit
+   * checks if healing cannot heal more life than the unit maxhitpoints
+   */
   @Test
   public void subOverHealTest() {
     Fighter fighter = new Fighter(0, 5, new Location(0, 1));
@@ -149,6 +175,9 @@ public class ClericTest extends AbstractTestUnit {
     assertEquals(30,fighter1.getCurrentHitPoints());
   }
 
+  /**
+   * Checks that the methods mayor, normal, menor don't produce bugs
+   */
   @Test
   public void mmmTest(){
     Bow bow = new Bow("Bow", 20, 2, 3);

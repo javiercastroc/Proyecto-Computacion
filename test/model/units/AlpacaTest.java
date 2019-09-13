@@ -27,6 +27,12 @@ public class AlpacaTest extends AbstractTestUnit {
     return alpaca;
   }
 
+
+  /** check how method equipItem works with all kind of items
+   * (for alpacas)
+   *
+   */
+  @Override
   @Test
   public void equipTest() {
     Axe axes;
@@ -78,6 +84,9 @@ public class AlpacaTest extends AbstractTestUnit {
     assertNull(alpaca.getEquippedItem());
     alpaca.items.remove(oscuridad); }
 
+    /**
+   * Checks that the methods mayor, normal, menor don't produce bugs
+   */
     @Test
     public void mmmTest(){
     Bow bow = new Bow("Bow", 20, 2, 3);

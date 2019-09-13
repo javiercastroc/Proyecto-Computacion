@@ -94,6 +94,10 @@ public abstract class AbstractUnit implements IUnit {
       else {item.equipTo(this);}
     }
 
+    /**
+     * Unit add to his inventory item, if possible (max container)
+     * @param item object to add
+     */
   public void addItem(IEquipableItem item) {
     if(this.items.size()<this.maxItems && item!=null){
       this.items.add(item);
@@ -147,7 +151,12 @@ public abstract class AbstractUnit implements IUnit {
       if(getEquippedItem()!=null && isInRange(other)){
           getEquippedItem().heal(other); }}
   }
-
+    /**
+     * Receives damage from a normal attack.
+     *
+     * @param attack
+     *     Received attack.
+     */
   protected void receiveAttack(IEquipableItem attack) {
       if(getCurrentHitPoints()-attack.getPower()>=0){
         this.currentHitPoints -= attack.getPower();}
@@ -155,10 +164,42 @@ public abstract class AbstractUnit implements IUnit {
     }
 
     @Override
+    public void equipAxe(final Axe axe) {}
+
+    @Override
+    public void equipBow(final Bow bow) {}
+
+    @Override
+    public void equipSpear(final Spear spear) {}
+
+    @Override
+    public void equipStaff(final Staff staff) {}
+
+    @Override
+    public void equipSword(final Sword sword) {}
+
+    @Override
+    public void equipAnima(final Anima anima) {}
+
+    @Override
+    public void equipOscuridad(final Oscuridad oscuridad) {}
+
+    @Override
+    public void equipLuz(final Luz luz) {}
+
+    @Override
+    public void normal(IEquipableItem attack) { }
+
+    @Override
+    public void mayor(IEquipableItem attack) { }
+
+    @Override
+    public void menor(IEquipableItem attack) {}
+
+    @Override
     public void receiveAxeAttack(Axe attack){
         receiveAttack(attack);
     }
-
     @Override
     public void receiveBowAttack(Bow attack){
         receiveAttack(attack);
@@ -171,7 +212,7 @@ public abstract class AbstractUnit implements IUnit {
 
     @Override
     public void receiveStaffHeal(Staff attack){
-        receiveAttack(attack);
+        receiveHeal(attack);
     }
 
     @Override
@@ -195,17 +236,29 @@ public abstract class AbstractUnit implements IUnit {
     }
 
 
+    /**
+     * Receives an attack to which this Unit is weak
+     * @param attack item, weapon that is attacking this unit
+     */
     protected void receiveWeaknessAttack(IEquipableItem attack) {
       if(getCurrentHitPoints()-(attack.getPower()*1.5)>=0){
           this.currentHitPoints -= attack.getPower()*1.5; }
       else this.currentHitPoints=0;}
 
 
+    /**
+     * Receives an attack to which this Unit is resistant
+     * @param attack item, weapon that is attacking this unit
+     */
   protected void receiveResistantAttack(IEquipableItem attack) {
       if(attack.getPower() - 20 >=0 && getCurrentHitPoints()-(attack.getPower()-20)>=0){
           this.currentHitPoints -= attack.getPower() - 20; }
       else this.currentHitPoints=0; }
 
+    /**
+     * Receives heal
+     * @param attack item staff
+     */
   protected void receiveHeal(IEquipableItem attack){
       if (getCurrentHitPoints() + attack.getPower()<=getMaxHitPoints()){
           this.currentHitPoints += attack.getPower();
