@@ -3,6 +3,9 @@ package model.units;
 import model.items.*;
 import model.map.Location;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeSupport;
+
 /**
  * A <i>Hero</i> is a special kind of unit, the player that defeats this unit wins the game.
  * <p>
@@ -13,6 +16,9 @@ import model.map.Location;
  */
 public class Hero extends AbstractUnit {
 
+
+  public PropertyChangeSupport
+          heroNotification = new PropertyChangeSupport(this);
   /**
    * Creates a new Unit.
    *
@@ -73,5 +79,9 @@ public class Hero extends AbstractUnit {
     else receiveAttack(attack);
   }
 
+  @Override
+  public void useItem(IUnit other) {this.attack(other); }
 
+  @Override
+  public void died() { heroNotification.firePropertyChange(new PropertyChangeEvent(this, "HeroDeath", "", this));}
 }

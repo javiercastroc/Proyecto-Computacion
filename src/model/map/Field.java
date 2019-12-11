@@ -140,4 +140,12 @@ public class Field {
   public boolean checkConnection(final Location cell1, final Location cell2) {
     return cell1.isNeighbour(cell2);
   }
+
+  public Field generateMap(int mapSize){
+    map.clear();
+    for(int i=0; i<mapSize; i++){
+      for(int j=0; j<mapSize; j++){
+        this.addCell(new Location(i, j));
+      } }return this;
+  }
 }

@@ -203,4 +203,6 @@ public interface IUnit {
    * @param attack item: Oscuridad spellbook
    */
   void menor(IEquipableItem attack);
+
+  void useItem(IUnit other);
 }

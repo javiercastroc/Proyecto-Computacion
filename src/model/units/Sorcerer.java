@@ -129,4 +129,6 @@ public class Sorcerer extends AbstractUnit {
         receiveResistantAttack(attack);
     }
 
+    @Override
+    public void useItem(IUnit other) {this.attack(other); }
 }

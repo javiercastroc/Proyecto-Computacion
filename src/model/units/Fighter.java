@@ -64,4 +64,7 @@ public class Fighter extends AbstractUnit {
     }
     else receiveAttack(attack);
   }
+
+  @Override
+  public void useItem(IUnit other) {this.attack(other); }
 }

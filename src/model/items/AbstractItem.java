@@ -84,5 +84,4 @@ public abstract class AbstractItem implements IEquipableItem {
 
   @Override
   public void attack(IUnit other) { }
-
 }

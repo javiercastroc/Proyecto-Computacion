@@ -59,5 +59,6 @@ public class Cleric extends AbstractUnit {
     }
     else receiveAttack(attack);
   }
-
+  @Override
+  public void useItem(IUnit other) {this.heal(other); }
 }

@@ -90,4 +90,5 @@ public interface IEquipableItem {
    * @param attack, item that is attacking
    */
   void animaVS(AbstractItem attack);
+
 }

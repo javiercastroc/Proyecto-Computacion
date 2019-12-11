@@ -37,4 +37,5 @@ public class Axe extends AbstractItem {
   public void attack(IUnit other) {
     other.receiveAxeAttack(this);
   }
+
 }

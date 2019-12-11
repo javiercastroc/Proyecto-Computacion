@@ -65,4 +65,5 @@ public class Anima extends AbstractItem {
     public void animaVS(AbstractItem attack){
         (this.getOwner()).normal(attack);
 }
+
 }

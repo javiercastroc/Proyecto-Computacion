@@ -2,6 +2,8 @@ package model.units;
 
 import static java.lang.Math.min;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +30,8 @@ public abstract class AbstractUnit implements IUnit {
   private final int maxItems;
   protected IEquipableItem equippedItem;
   private Location location;
+  public PropertyChangeSupport
+            deathNotification = new PropertyChangeSupport(this);
 
   /**
    * Creates a new Unit.
@@ -123,6 +127,7 @@ public abstract class AbstractUnit implements IUnit {
     if (getLocation().distanceTo(targetLocation) <= getMovement()
         && targetLocation.getUnit() == null) {
       setLocation(targetLocation);
+      targetLocation.setUnit(this);
     }
   }
   @Override
@@ -160,7 +165,9 @@ public abstract class AbstractUnit implements IUnit {
   protected void receiveAttack(IEquipableItem attack) {
       if(getCurrentHitPoints()-attack.getPower()>=0){
         this.currentHitPoints -= attack.getPower();}
-      else this.currentHitPoints=0;
+      else{ this.currentHitPoints=0;
+          this.died();
+      }
     }
 
     @Override
@@ -243,7 +250,9 @@ public abstract class AbstractUnit implements IUnit {
     protected void receiveWeaknessAttack(IEquipableItem attack) {
       if(getCurrentHitPoints()-(attack.getPower()*1.5)>=0){
           this.currentHitPoints -= attack.getPower()*1.5; }
-      else this.currentHitPoints=0;}
+      else{ this.currentHitPoints=0;
+        this.died();
+    }}
 
 
     /**
@@ -253,7 +262,10 @@ public abstract class AbstractUnit implements IUnit {
   protected void receiveResistantAttack(IEquipableItem attack) {
       if(attack.getPower() - 20 >=0 && getCurrentHitPoints()-(attack.getPower()-20)>=0){
           this.currentHitPoints -= attack.getPower() - 20; }
-      else this.currentHitPoints=0; }
+      else {
+          this.currentHitPoints = 0;
+          this.died();
+      }}
 
     /**
      * Receives heal
@@ -266,6 +278,8 @@ public abstract class AbstractUnit implements IUnit {
       else currentHitPoints=getMaxHitPoints();
   }
 
+    public void useItem(IUnit other) { }
 
+    public void died() {deathNotification.firePropertyChange(new PropertyChangeEvent(this, "Death", "", this)); }
 }
 
