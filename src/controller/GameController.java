@@ -3,10 +3,12 @@ package controller;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import model.Tactician;
 import model.items.IEquipableItem;
 import model.map.Field;
+import model.map.Location;
 import model.units.IUnit;
 import model.handlers.AttackHandler;
 import model.handlers.PassTurnHandler;
@@ -22,16 +24,16 @@ import java.util.Collections;
  */
 public class GameController {
 
-  private List<Tactician> tacticians = new ArrayList<>();
-  private Tactician[] users;
-  private Field map;
+    private List<Tactician> users = new ArrayList<Tactician>();
+  private List<Tactician> tacticians = new ArrayList<Tactician>();
+  private Field map=new Field();
   private Tactician turn;
   private int roundNumber;
   private int maxRounds;
   private IUnit selectedUnit;
-  private List<Tactician> turns = new ArrayList<>();
+  private List<Tactician> turns = new ArrayList<Tactician>();
   private IEquipableItem item;
-  private Boolean initedGame;
+  private Boolean initedGame=false;
   private List<String> winners = new ArrayList<>();
   public PropertyChangeSupport
           limitRoundsNotification = new PropertyChangeSupport(this);
@@ -45,20 +47,17 @@ public class GameController {
    */
   GameController(int numberOfPlayers, int mapSize) {
     this.limitRoundsNotification.addPropertyChangeListener(new AttackHandler(this));
-    this.map = this.map.generateMap(mapSize);
-    this.initedGame = false;
-        Tactician[] users = new Tactician[numberOfPlayers];
-        String name;
-        for (int i = 0; numberOfPlayers > i; i++) {
-          name = ("Player " + i);
-          users[i] = new Tactician(name, this.map);
-          users[i].attackNotification.addPropertyChangeListener(new AttackHandler(this));
-          users[i].passTurnNotification.addPropertyChangeListener(new PassTurnHandler(this));
-          tacticians.add(users[i]);
-
+    this.map.generateMap(mapSize);
+    String name;
+    for (int i = 0; numberOfPlayers > i; i++) {
+        name = ("Player " + (i));
+        tacticians.add(new Tactician(name,this.map));
+        tacticians.get(i).attackNotification.addPropertyChangeListener(new AttackHandler(this));
+        tacticians.get(i).passTurnNotification.addPropertyChangeListener(new PassTurnHandler(this));
     }
+    users=tacticians;
     this.turn = tacticians.get(0);
-
+    turns=tacticians;
   }
 
 
@@ -74,7 +73,7 @@ public class GameController {
    * @return the map of the current game
    */
   Field getGameMap() {
-    return map;
+    return this.map;
   }
 
   /**
@@ -103,12 +102,12 @@ public class GameController {
    */
   public void endTurn() {
     int index = turns.indexOf(getTurnOwner());
-    if (turns.get(index + 1) != null) {
+    if (index+1!=turns.size()) {
       this.turn = turns.get(index + 1);
       this.turn.setTurn();
     }
     else{
-      if(getRoundNumber()!=getMaxRounds()){
+      if(getRoundNumber()!=getMaxRounds()+1){
         this.roundNumber += 1;
         setTurns();
         this.turn.setTurn(); }
@@ -122,7 +121,11 @@ public class GameController {
    * @param tactician the player to be removed
    */
   public void removeTactician(String tactician) {
+      if(getTurnOwner().getName().equals(tactician)){
+          endTurn();
+      }
     tacticians.remove(searchTactician(tactician));
+    turns.remove(searchTactician(tactician));
   }
 
   public Tactician searchTactician(String name){
@@ -140,15 +143,18 @@ public class GameController {
   /**
    * Starts the game.
    *
-   * @param maxRounds the maximum number of turns the game can last
+   * @param rounds the maximum number of turns the game can last
    */
-  public void initGame(final int maxRounds) {
-
-    if(maxRounds==-1) {
+  public void initGame(final int rounds) {
+      winners.clear();
+      tacticians= users;
+      turns=tacticians;
+    if(rounds==-1) {
       initEndlessGame();}
-    if(maxRounds>0){
+    if(rounds>0){
       this.initedGame=true;
-      this.maxRounds = maxRounds;
+      this.roundNumber=1;
+      this.maxRounds = rounds;
       setTurns();
       this.turn=turns.get(0);
       turns.get(0).setTurn();
@@ -161,8 +167,12 @@ public class GameController {
    * Starts a game without a limit of turns.
    */
   public void initEndlessGame() {
+      winners.clear();
+      tacticians= users;
+      turns=tacticians;
     this.initedGame=true;
-    this.maxRounds = Integer.MAX_VALUE;
+    this.maxRounds = -1;
+    this.roundNumber=1;
     setTurns();
     this.turn=turns.get(0);
     turns.get(0).setTurn();
@@ -172,6 +182,13 @@ public class GameController {
    * @return the winner of this game, if the match ends in a draw returns a list of all the winners
    */
   public List<String> getWinners() {
+
+      if (getMaxRounds()!=-1 &&getMaxRounds()>getRoundNumber()-1 && tacticians.size()>1){
+          return null;
+      }
+      if(getMaxRounds()==-1 && tacticians.size()>1){
+          return null;
+      }
     this.initedGame=false;
     int length=getTacticians().size();
     for(int i=0;length > i;i++){
@@ -253,13 +270,13 @@ public class GameController {
 
 
   public void setTurns() {
-    if(getTurnOwner()!=null){
       Tactician nonrep=getTurnOwner();
-      Collections.shuffle(this.tacticians);
-      while(getTurns().get(0)==nonrep){
-        Collections.shuffle(this.tacticians);}}
+    if(getTurnOwner()!=null){
+      Collections.shuffle(turns);
+      while(getTurns().get(0)==nonrep && this.roundNumber!=0){
+        Collections.shuffle(turns);}}
     else{
-      Collections.shuffle(this.tacticians); }
+      Collections.shuffle(turns); }
     this.turn=tacticians.get(0);}
 
 
@@ -276,4 +293,5 @@ public class GameController {
       }
       return null;
     }
+
 }

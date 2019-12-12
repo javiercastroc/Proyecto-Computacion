@@ -96,15 +96,15 @@ public class Tactician {
     }}
 
     public int getPower(IEquipableItem item){
-        if(getInventory().contains(item)){
-            return item.getPower(); }
-        else return 0;}
+        if(getInventory().contains(item)) {
+            return item.getPower();
+        } else return 0;}
 
     public int getCurrentHitPoints(){
         return units.get(indexSelected()).getCurrentHitPoints();
     }
 
-    public int MaxHitPoints(){
+    public int getMaxHitPoints(){
         return units.get(indexSelected()).getMaxHitPoints();
     }
     public void setTurn(){

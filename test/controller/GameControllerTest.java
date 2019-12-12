@@ -37,9 +37,13 @@ class GameControllerTest {
     List<Tactician> tacticians = controller.getTacticians();
     assertEquals(4, tacticians.size());
     for (int i = 0; i < tacticians.size(); i++) {
-      assertEquals("Player " + i, tacticians.get(i + 1).getName());
+      assertEquals("Player " + (i), tacticians.get(i).getName());
     }
   }
+
+  @Test
+  void setUpTest() {
+    }
 
   @Test
   void getGameMap() {
@@ -78,8 +82,9 @@ class GameControllerTest {
   void getMaxRounds() {
     Random randomTurnSequence = new Random();
     IntStream.range(0, 50).forEach(i -> {
-      controller.initGame(randomTurnSequence.nextInt());
-      assertEquals(randomTurnSequence.nextInt(), controller.getMaxRounds());
+      int m=Math.abs(randomTurnSequence.nextInt());
+      controller.initGame(m);
+      assertEquals(m, controller.getMaxRounds());
     });
     controller.initEndlessGame();
     assertEquals(-1, controller.getMaxRounds());
@@ -87,9 +92,9 @@ class GameControllerTest {
 
   @Test
   void endTurn() {
-    Tactician firstPlayer = controller.getTurnOwner();
-    // Nuevamente, para determinar el orden de los jugadores se debe usar una semilla
-    Tactician secondPlayer = new Tactician(); // <- Deben cambiar esto (!)
+      Tactician firstPlayer = controller.getTurnOwner();
+      // Nuevamente, para determinar el orden de los jugadores se debe usar una semilla
+    Tactician secondPlayer = new Tactician("Player 1", controller.getGameMap()); // <- Deben cambiar esto (!)
     assertNotEquals(secondPlayer.getName(), firstPlayer.getName());
 
     controller.endTurn();
@@ -100,8 +105,10 @@ class GameControllerTest {
   @Test
   void removeTactician() {
     assertEquals(4, controller.getTacticians().size());
-    controller.getTacticians()
-        .forEach(tactician -> Assertions.assertTrue(testTacticians.contains(tactician.getName())));
+    assertEquals(4, controller.getTacticians().size());
+    for (int i=0;i<4;i++) {
+      assertTrue(testTacticians.contains(controller.getTacticians().get(i).getName()));
+    }
 
     controller.removeTactician("Player 0");
     assertEquals(3, controller.getTacticians().size());
@@ -131,10 +138,10 @@ class GameControllerTest {
     IntStream.range(0, 2).forEach(i -> controller.endTurn());
     List<String> winners = controller.getWinners();
     assertEquals(2, winners.size());
-    assertTrue(List.of("Player 1", "Player 2").containsAll(winners));
+    assertTrue(List.of("Player 1", "Player 3").containsAll(winners));
 
     controller.initEndlessGame();
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 2; i++) {
       assertNull(controller.getWinners());
       controller.removeTactician("Player " + i);
     }
