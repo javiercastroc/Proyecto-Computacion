@@ -1,6 +1,6 @@
 package model.items;
 
-import model.units.IUnit;
+import model.units.AbstractUnit;
 
 /**
  * This class represents a <i>spear</i>.
@@ -29,13 +29,16 @@ public class Spear extends AbstractItem {
   }
 
   @Override
-  public void equipTo(final IUnit unit) {
+  public void equipTo(final AbstractUnit unit) {
     if (unit.getItems().contains(this) && this.getOwner()==unit){
         unit.equipSpear(this);}
   }
 
   @Override
-  public void attack(IUnit other) {
+  public void attack(AbstractUnit other) {
       other.receiveSpearAttack(this);
   }
+
+  @Override
+  public void use(AbstractUnit other) { this.attack(other);}
 }

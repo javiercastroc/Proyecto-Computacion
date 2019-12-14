@@ -25,7 +25,7 @@ public class SwordMasterTest extends AbstractTestUnit {
    * @return the current unit being tested
    */
   @Override
-  public IUnit getTestUnit() {
+  public AbstractUnit getTestUnit() {
     return swordMaster;
   }
 

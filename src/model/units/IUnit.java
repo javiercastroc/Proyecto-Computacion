@@ -2,6 +2,7 @@ package model.units;
 
 import java.util.List;
 
+import model.Tactician;
 import model.items.*;
 import model.map.Location;
 
@@ -43,7 +44,7 @@ public interface IUnit {
    */
   IEquipableItem getEquippedItem();
 
-  void giveItem(IEquipableItem item, IUnit unit);
+  void giveItem(IEquipableItem item, AbstractUnit unit);
 
   /**
    * @param item
@@ -118,25 +119,25 @@ public interface IUnit {
   /**Verifies if other unit is in range according to this unit equipped item
    * @param other, other unit who
    */
-   boolean isInRange(IUnit other);
+   boolean isInRange(AbstractUnit other);
 
   /**
    * Attack other and causes a combat(counterAttack)
    * @param other Unit that receives the attack.
    */
-  void attack(IUnit other);
+  void attack(AbstractUnit other);
 
   /**
    * Counterattack if possible (item equipped)
    * @param other Unit that receives the attack.
    */
-  void counterAttack(IUnit other);
+  void counterAttack(AbstractUnit other);
 
   /**
    * Heal other's Hitpoints if possible (staff equipped)
    * @param other Unit that receives healing.
    */
-  void heal(IUnit other);
+  void heal(AbstractUnit other);
 
   /**
    * This unit receives an axe attack
@@ -204,5 +205,10 @@ public interface IUnit {
    */
   void menor(IEquipableItem attack);
 
-  void useItem(IUnit other);
+  void useItem(AbstractUnit other);
+
+  public void died();
+
+  public Tactician getOwner();
+
 }

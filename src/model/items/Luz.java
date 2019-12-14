@@ -1,6 +1,6 @@
 package model.items;
 
-import model.units.IUnit;
+import model.units.AbstractUnit;
 
 /**
  * This class represents an Axe.
@@ -29,12 +29,12 @@ public class Luz extends AbstractItem {
     }
 
     @Override
-    public void equipTo(final IUnit unit) {
+    public void equipTo(final AbstractUnit unit) {
         if (unit.getItems().contains(this) && this.getOwner()==unit){
             unit.equipLuz(this);}
     }
     @Override
-    public void attack(IUnit other) {
+    public void attack(AbstractUnit other) {
         other.receiveLuzAttack(this);
     }
 
@@ -64,4 +64,7 @@ public class Luz extends AbstractItem {
     @Override
     public void animaVS(AbstractItem attack){
         (this.getOwner()).mayor(attack);}
+
+    @Override
+    public void use(AbstractUnit other) { this.attack(other);}
 }

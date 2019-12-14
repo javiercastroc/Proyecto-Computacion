@@ -1,5 +1,6 @@
 package model.units;
 
+import model.Tactician;
 import model.items.*;
 import model.map.Location;
 
@@ -14,8 +15,12 @@ import model.map.Location;
 public class SwordMaster extends AbstractUnit {
 
   public SwordMaster(final int hitPoints, final int movement, final Location location,
-      IEquipableItem... items) {
+                        IEquipableItem... items) {
     super(hitPoints, movement, location, 3, items);
+  }
+  public SwordMaster(final int hitPoints, final int movement, final Location location, final Tactician owner,
+                     IEquipableItem... items) {
+    super(hitPoints, movement, location, 3,owner, items);
   }
 
   /**
@@ -64,5 +69,5 @@ public class SwordMaster extends AbstractUnit {
     else receiveAttack(attack);
   }
   @Override
-  public void useItem(IUnit other) {this.attack(other); }
+  public void useItem(AbstractUnit other) {this.attack(other); }
 }

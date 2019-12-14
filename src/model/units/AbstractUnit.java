@@ -10,6 +10,7 @@ import java.util.List;
 
 import model.items.*;
 import model.map.Location;
+import model.Tactician;
 
 /**
  * This class represents an abstract unit.
@@ -30,6 +31,7 @@ public abstract class AbstractUnit implements IUnit {
   private final int maxItems;
   protected IEquipableItem equippedItem;
   private Location location;
+  private Tactician owner;
   public PropertyChangeSupport
             deathNotification = new PropertyChangeSupport(this);
 
@@ -51,9 +53,22 @@ public abstract class AbstractUnit implements IUnit {
     this.currentHitPoints = hitPoints;
     this.movement = movement;
     this.location = location;
+      location.setUnit(this);
     this.maxItems = maxItems;
     this.items.addAll(Arrays.asList(items).subList(0, min(maxItems, items.length)));
   }
+
+    protected AbstractUnit(final int hitPoints, final int movement,
+                           final Location location, final int maxItems, final Tactician owner, final IEquipableItem... items) {
+        this.maxHitPoints =hitPoints;
+        this.currentHitPoints = hitPoints;
+        this.movement = movement;
+        this.location = location;
+        location.setUnit(this);
+        this.maxItems = maxItems;
+        this.items.addAll(Arrays.asList(items).subList(0, min(maxItems, items.length)));
+        this.owner =owner;
+    }
 
   @Override
   public int getMaxItems(){return maxItems;}
@@ -76,7 +91,7 @@ public abstract class AbstractUnit implements IUnit {
     return equippedItem;
   }
 
-  public void giveItem(final IEquipableItem item, IUnit other){
+  public void giveItem(final IEquipableItem item, AbstractUnit other){
       if(this.getLocation().isNeighbour(other.getLocation())){
           if(item==this.getEquippedItem() && other.getItems().size()<other.getMaxItems() && item!=null) {
               this.equipItem(null);
@@ -131,13 +146,13 @@ public abstract class AbstractUnit implements IUnit {
     }
   }
   @Override
-  public boolean isInRange(IUnit other) {
+  public boolean isInRange(AbstractUnit other) {
       if(getEquippedItem()!=null){
       return (this.getEquippedItem().getMinRange() <= this.getLocation().distanceTo(other.getLocation()))
               && (this.getLocation().distanceTo(other.getLocation()) <= this.getEquippedItem().getMaxRange());}
       else return false; }
   @Override
-  public void attack(IUnit other) {
+  public void attack(AbstractUnit other) {
       int vidainicial = other.getCurrentHitPoints();
       if(getCurrentHitPoints()>0 && other.getCurrentHitPoints()>0){
       if(getEquippedItem()!=null && isInRange(other)){
@@ -146,12 +161,12 @@ public abstract class AbstractUnit implements IUnit {
   }}
 
   @Override
-  public void counterAttack(IUnit other) {
+  public void counterAttack(AbstractUnit other) {
       if(other.getEquippedItem()!=null && other.isInRange(this)){
           getEquippedItem().attack(other);
   }}
   @Override
-  public void heal(IUnit other) {
+  public void heal(AbstractUnit other) {
       if(getCurrentHitPoints()>0 && other.getCurrentHitPoints()>0){
       if(getEquippedItem()!=null && isInRange(other)){
           getEquippedItem().heal(other); }}
@@ -278,8 +293,15 @@ public abstract class AbstractUnit implements IUnit {
       else currentHitPoints=getMaxHitPoints();
   }
 
-    public void useItem(IUnit other) { }
+    public void useItem(AbstractUnit other) { getEquippedItem().use(other);}
 
-    public void died() {deathNotification.firePropertyChange(new PropertyChangeEvent(this, "Death", "", this)); }
+    public void died() {this.currentHitPoints=0;
+      deathNotification.firePropertyChange(new PropertyChangeEvent(this, "Death", "", this)); }
+
+    public Tactician getOwner(){ return owner;}
+
+    public void setOwner(Tactician owner){this.owner=owner;}
+
+
 }
 

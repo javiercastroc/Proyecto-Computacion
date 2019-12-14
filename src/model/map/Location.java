@@ -2,7 +2,7 @@ package model.map;
 
 import java.util.HashSet;
 import java.util.Set;
-import model.units.IUnit;
+import model.units.AbstractUnit;
 
 /**
  * This class represents a <i>location</i> in the game's map.
@@ -25,7 +25,7 @@ public class Location {
   private final int column;
   private final String id;
   private Set<Location> neighbours = new HashSet<>();
-  private IUnit unit;
+  private AbstractUnit unit;
 
   /**
    * Creates a new location of the game map.
@@ -97,7 +97,7 @@ public class Location {
   /**
    * @return the unit currently located in this cell
    */
-  public IUnit getUnit() {
+  public AbstractUnit getUnit() {
     return unit;
   }
 
@@ -107,7 +107,7 @@ public class Location {
    * @param unit
    *     the unit to be placed in this cell
    */
-  public void setUnit(final IUnit unit) {
+  public void setUnit(final AbstractUnit unit) {
     this.unit = unit;
   }
 

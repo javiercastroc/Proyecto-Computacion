@@ -1,14 +1,15 @@
 package model;
 
-import model.units.AbstractUnit;
+import model.handlers.SelectHandler;
+import model.units.*;
 import model.map.Field;
 import model.items.AbstractItem;
-import model.units.IUnit;
 import model.items.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
+import model.handlers.DeathHandler;
 
 
 public class Tactician {
@@ -16,12 +17,13 @@ public class Tactician {
     private final String name;
     private Field map;
     public PropertyChangeSupport
-            attackNotification = new PropertyChangeSupport(this);
+            selectNotification = new PropertyChangeSupport(this);
     public PropertyChangeSupport
             passTurnNotification = new PropertyChangeSupport(this);
     private AbstractUnit selectedUnit;
     private Boolean isMyTurn;
-    protected List<IUnit> nonMoved = new ArrayList<>();
+    protected List<AbstractUnit> nonMoved = new ArrayList<>();
+    private int selectedIndex;
 
 
     public Tactician(String name, Field map) {
@@ -35,16 +37,16 @@ public class Tactician {
         return isMyTurn;
     }
 
-    public void attack(IUnit unit) {
+    public void attack(AbstractUnit unit) {
         if(isMyTurn() && (selectedUnit!=null)) {
-            attackNotification.firePropertyChange(new PropertyChangeEvent(this, "Atack", "", unit));
-            units.get(indexSelected()).useItem(unit);
+            getSelectedUnit().useItem(unit);
         }
     }
 
     public void move(int x, int y) {
         if(isMyTurn() && getNonMoved().contains(getSelectedUnit())){
             units.get(indexSelected()).moveTo(map.getCell(y,x));
+            this.selectedUnit=units.get(indexSelected());
         }
 
     }
@@ -62,6 +64,7 @@ public class Tactician {
     public void selectUnit(AbstractUnit unit){
         if (isMyTurn() && units.contains(unit)){
             this.selectedUnit=unit;
+            selectNotification.firePropertyChange(new PropertyChangeEvent(this, "Select", "", unit));
         }
     }
 
@@ -75,14 +78,14 @@ public class Tactician {
         return selectedUnit;
     }
 
-    public List<IUnit> getUnits() {
-        return List.copyOf(units);}
+    public List<AbstractUnit> getUnits() {
+        return units;}
 
     public List<IEquipableItem> getInventory() {
         return getSelectedUnit().getItems();
     }
 
-    public List<IUnit> getNonMoved() {
+    public List<AbstractUnit> getNonMoved() {
         return List.copyOf(nonMoved);}
 
     public Field getMap() {
@@ -90,8 +93,8 @@ public class Tactician {
 
     public void passTurn(){
         if(isMyTurn()){
-        this.isMyTurn=false;
         selectUnit(null);
+        this.isMyTurn=false;
         passTurnNotification.firePropertyChange(new PropertyChangeEvent(this, "PassTurn", "", ""));
     }}
 
@@ -107,14 +110,24 @@ public class Tactician {
     public int getMaxHitPoints(){
         return units.get(indexSelected()).getMaxHitPoints();
     }
+
     public void setTurn(){
         this.isMyTurn=true;
         this.nonMoved=List.copyOf(getUnits());
     }
 
-    public void killedUnit(IUnit unit){
-        if(units.contains(unit)){
+    public void killedUnit(AbstractUnit unit){
+        if(units.contains(unit) && unit.getCurrentHitPoints()==0){
         this.units.remove(unit);}
     }
 
+    public void addUnit(AbstractUnit unit){
+        if (unit.getOwner()==this){
+            units.add(unit);
+        }
+    }
+
+    public void deathNotify(AbstractUnit unit){
+        unit.deathNotification.addPropertyChangeListener(new DeathHandler(this));
+    }
 }

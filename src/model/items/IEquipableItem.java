@@ -1,6 +1,6 @@
 package model.items;
 
-import model.units.IUnit;
+import model.units.AbstractUnit;
 
 /**
  * This interface represents the <i>weapons</i> that the units of the game can use.
@@ -19,13 +19,13 @@ public interface IEquipableItem {
    * @param unit
    *     the unit that will be quipped with the item
    */
-  void equipTo(IUnit unit);
+  void equipTo(AbstractUnit unit);
 
 
   /**
    * @return the unit that has currently equipped this item
    */
-  IUnit getOwner();
+  AbstractUnit getOwner();
 
   /**
    * Sets the owner of this item. (sets parameter owner of this item)
@@ -33,7 +33,7 @@ public interface IEquipableItem {
    * @param unit
    *     the unit that will be the owner of this item
    */
- void setOwner(IUnit unit);
+ void setOwner(AbstractUnit unit);
 
   /**
    * @return the name of the item
@@ -60,14 +60,14 @@ public interface IEquipableItem {
    *
    * @param other unit to attack
    */
-  void attack(IUnit other);
+  void attack(AbstractUnit other);
 
   /**
    * heals other unit with this item
    *
    * @param other unit to heal
    */
-    void heal(IUnit other);
+    void heal(AbstractUnit other);
 
 
     /**
@@ -91,4 +91,5 @@ public interface IEquipableItem {
    */
   void animaVS(AbstractItem attack);
 
+  void use(AbstractUnit unit);
 }

@@ -39,7 +39,7 @@ public interface ITestUnit {
   /**
    * @return the current unit being tested
    */
-  IUnit getTestUnit();
+  AbstractUnit getTestUnit();
 
   /**
    * Checks if the axe is equipped correctly to the unit

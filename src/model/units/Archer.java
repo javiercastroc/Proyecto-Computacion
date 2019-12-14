@@ -66,5 +66,5 @@ public class Archer extends AbstractUnit {
     else receiveAttack(attack);
   }
   @Override
-  public void useItem(IUnit other) {this.attack(other); }
+  public void useItem(AbstractUnit other) {this.attack(other); }
 }

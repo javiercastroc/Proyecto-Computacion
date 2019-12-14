@@ -2,7 +2,6 @@ package model.items;
 
 import model.units.AbstractUnit;
 import model.units.Alpaca;
-import model.units.IUnit;
 import model.map.Field;
 import model.map.Location;
 import org.junit.jupiter.api.BeforeEach;
@@ -126,7 +125,7 @@ public abstract class AbstractTestItem {
   @Test
   public void equippedToTest() {
     assertNull(getTestItem().getOwner());
-    IUnit unit = getTestUnit();
+    AbstractUnit unit = getTestUnit();
     unit.addItem(getTestItem());
     getTestItem().equipTo(unit);
     assertEquals(unit, getTestItem().getOwner());
@@ -138,7 +137,7 @@ public abstract class AbstractTestItem {
   @Test
   public void equipNullTest(){
     assertNull(getTestItem().getOwner());
-    IUnit unit = getTestUnit();
+    AbstractUnit unit = getTestUnit();
     unit.addItem(getTestItem());
     getTestItem().equipTo(unit);
     unit.equipItem(null);
@@ -152,7 +151,7 @@ public abstract class AbstractTestItem {
   @Test
   public void equipOtherTest() {
     assertNull(getTestItem().getOwner());
-    IUnit unit = getTestUnit();
+    AbstractUnit unit = getTestUnit();
     targetAlpaca.addItem(getTestItem());
     getTestItem().equipTo(unit);
     assertNotEquals(unit, getTestItem().getOwner());
@@ -164,7 +163,7 @@ public abstract class AbstractTestItem {
   @Test
   public void equipToTest() {
     assertNull(getTestItem().getOwner());
-    IUnit unit = getTestUnit();
+    AbstractUnit unit = getTestUnit();
     unit.addItem(getTestItem());
     assertEquals(getTestItem().getOwner(),unit);
     assertTrue(unit.getItems().contains(getTestItem()));
@@ -176,5 +175,5 @@ public abstract class AbstractTestItem {
   /**
    * @return a unit that can equip the item being tested
    */
-  public abstract IUnit getTestUnit();
+  public abstract AbstractUnit getTestUnit();
 }

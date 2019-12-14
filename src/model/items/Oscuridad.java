@@ -1,7 +1,6 @@
 package model.items;
 
 import model.units.AbstractUnit;
-import model.units.IUnit;
 
 /**
  * This class represents an Axe.
@@ -30,12 +29,12 @@ public class Oscuridad extends AbstractItem {
     }
 
     @Override
-    public void equipTo(final IUnit unit) {
+    public void equipTo(final AbstractUnit unit) {
         if (unit.getItems().contains(this) && this.getOwner()==unit){
         unit.equipOscuridad(this);}
     }
     @Override
-    public void attack(IUnit other) {
+    public void attack(AbstractUnit other) {
         other.receiveOscuridadAttack(this);
     }
 
@@ -65,5 +64,8 @@ public class Oscuridad extends AbstractItem {
     @Override
     public void animaVS(AbstractItem attack){
         (this.getOwner()).menor(attack);}
+
+    @Override
+    public void use(AbstractUnit other) { this.attack(other);}
 
 }

@@ -16,8 +16,8 @@ public class SwordTest extends AbstractTestItem {
 
   private Sword wrongSword;
   private Bow bow;
-  private IUnit fighter;
-  private IUnit alpaca;
+  private AbstractUnit fighter;
+  private AbstractUnit alpaca;
   private Archer archer;
   private Cleric cleric;
   private Hero hero;
@@ -78,7 +78,7 @@ public class SwordTest extends AbstractTestItem {
    * @return a unit that can equip the item being tested
    */
   @Override
-  public IUnit getTestUnit() {
+  public AbstractUnit getTestUnit() {
     return swordMaster;
   }
 

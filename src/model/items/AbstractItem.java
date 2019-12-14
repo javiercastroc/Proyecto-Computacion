@@ -1,6 +1,6 @@
 package model.items;
 
-import model.units.IUnit;
+import model.units.AbstractUnit;
 
 /**
  * Abstract class that defines some common information and behaviour between all items.
@@ -14,7 +14,7 @@ public abstract class AbstractItem implements IEquipableItem {
   private final int power;
   protected int maxRange;
   protected int minRange;
-  private IUnit owner;
+  private AbstractUnit owner;
 
   /**
    * Constructor for a default item without any special behaviour.
@@ -36,18 +36,18 @@ public abstract class AbstractItem implements IEquipableItem {
   }
 
   @Override
-  public void equipTo(final IUnit unit) {
+  public void equipTo(final AbstractUnit unit) {
       if(this.getOwner()==unit && unit.getItems().contains(this)){
     unit.equipItem(this);}
   }
 
   @Override
-  public IUnit getOwner() {
+  public AbstractUnit getOwner() {
     return owner;
   }
 
   @Override
-  public void setOwner(final IUnit unit) {
+  public void setOwner(final AbstractUnit unit) {
     owner=unit;
   }
 
@@ -71,7 +71,7 @@ public abstract class AbstractItem implements IEquipableItem {
     return maxRange;
   }
   @Override
-  public void heal(IUnit other) {}
+  public void heal(AbstractUnit other) {}
 
   @Override
   public void oscuridadVS(AbstractItem attack) { }
@@ -83,5 +83,8 @@ public abstract class AbstractItem implements IEquipableItem {
   public void animaVS(AbstractItem attack) {}
 
   @Override
-  public void attack(IUnit other) { }
+  public void attack(AbstractUnit other) { }
+
+  @Override
+  public void use(AbstractUnit other) {}
 }

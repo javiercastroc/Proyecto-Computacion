@@ -1,5 +1,6 @@
 package model.units;
 
+import model.Tactician;
 import model.items.*;
 import model.map.Location;
 
@@ -15,6 +16,11 @@ public class Fighter extends AbstractUnit {
   public Fighter(final int hitPoints, final int movement, final Location location,
       IEquipableItem... items) {
     super(hitPoints, movement, location, 3, items);
+  }
+
+  public Fighter(final int hitPoints, final int movement, final Location location, final Tactician owner,
+                     IEquipableItem... items) {
+    super(hitPoints, movement, location, 3,owner, items);
   }
 
   /**
@@ -33,12 +39,14 @@ public class Fighter extends AbstractUnit {
       if (getEquippedItem() != null) {
           receiveResistantAttack(attack);
       }
+      else{receiveAttack(attack);}
   }
   @Override
   public void receiveSwordAttack(Sword attack) {
       if (getEquippedItem() != null) {
           receiveWeaknessAttack(attack);
       }
+      else{receiveAttack(attack);}
   }
 
   @Override
@@ -66,5 +74,5 @@ public class Fighter extends AbstractUnit {
   }
 
   @Override
-  public void useItem(IUnit other) {this.attack(other); }
+  public void useItem(AbstractUnit other) {this.attack(other); }
 }

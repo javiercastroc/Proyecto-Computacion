@@ -1,6 +1,6 @@
 package model.items;
 
-import model.units.IUnit;
+import model.units.AbstractUnit;
 
 /**
  * This class represents an Axe.
@@ -29,12 +29,12 @@ public class Anima extends AbstractItem {
     }
 
     @Override
-    public void equipTo(final IUnit unit) {
+    public void equipTo(final AbstractUnit unit) {
         if (unit.getItems().contains(this) && this.getOwner()==unit){
         unit.equipAnima(this);}
     }
     @Override
-    public void attack(IUnit other) {
+    public void attack(AbstractUnit other) {
         other.receiveAnimaAttack(this);
     }
 
@@ -66,4 +66,6 @@ public class Anima extends AbstractItem {
         (this.getOwner()).normal(attack);
 }
 
+    @Override
+    public void use(AbstractUnit other) { this.attack(other);}
 }

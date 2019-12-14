@@ -113,7 +113,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
    * @return the current unit being tested
    */
   @Override
-  public abstract IUnit getTestUnit();
+  public abstract AbstractUnit getTestUnit();
 
   /**
    * Checks if the axe is equipped correctly to the unit

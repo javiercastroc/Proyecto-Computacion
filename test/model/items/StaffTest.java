@@ -15,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class StaffTest extends AbstractTestItem {
   private Staff wrongStaff;
   private Bow bow;
-  private IUnit fighter;
-  private IUnit alpaca;
+  private AbstractUnit fighter;
+  private AbstractUnit alpaca;
   private Archer archer;
   private Cleric cleric;
   private Hero hero;
@@ -79,7 +79,7 @@ public class StaffTest extends AbstractTestItem {
    * @return a unit that can equip the item being tested
    */
   @Override
-  public IUnit getTestUnit() {
+  public AbstractUnit getTestUnit() {
     return cleric;
   }
 

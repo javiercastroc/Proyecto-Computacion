@@ -1,11 +1,9 @@
 package model.handlers;
 
-import model.Tactician;
 import controller.GameController;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import model.map.Location;
 import model.units.AbstractUnit;
 
 public class LimitRoundsHandler implements PropertyChangeListener{

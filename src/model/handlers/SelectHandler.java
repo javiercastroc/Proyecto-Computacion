@@ -1,17 +1,15 @@
 package model.handlers;
-import model.Tactician;
 import controller.GameController;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import model.map.Location;
 import model.units.AbstractUnit;
 
-public class AttackHandler implements PropertyChangeListener{
+public class SelectHandler implements PropertyChangeListener{
 
     private GameController controller;
 
-    public AttackHandler(GameController controller){
+    public SelectHandler(GameController controller){
         this.controller = controller;
     }
 
@@ -24,8 +22,7 @@ public class AttackHandler implements PropertyChangeListener{
      */
     @Override
     public void propertyChange(final PropertyChangeEvent evt) {
-        Location location=((AbstractUnit) evt.getNewValue()).getLocation();
-        controller.useItemOn(location.getColumn(),location.getRow());
+        controller.selectUnit((AbstractUnit) evt.getNewValue());
     }
 }
 

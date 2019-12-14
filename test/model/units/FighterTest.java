@@ -27,7 +27,7 @@ public class FighterTest extends AbstractTestUnit {
    * @return the current unit being tested
    */
   @Override
-  public IUnit getTestUnit() {
+  public AbstractUnit getTestUnit() {
     return fighter;
   }
 

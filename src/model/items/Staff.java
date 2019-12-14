@@ -1,6 +1,6 @@
 package model.items;
 
-import model.units.IUnit;
+import model.units.AbstractUnit;
 
 /**
  * This class represents a <i>Staff</i> type item.
@@ -29,12 +29,15 @@ public class Staff extends AbstractItem {
   }
 
   @Override
-  public void equipTo(final IUnit unit) {
+  public void equipTo(final AbstractUnit unit) {
     if (unit.getItems().contains(this) && this.getOwner()==unit){
     unit.equipStaff(this);}
   }
 
-  public void heal(IUnit other) {
+  public void heal(AbstractUnit other) {
     other.receiveStaffHeal(this);}
+
+  @Override
+  public void use(AbstractUnit other){ this.heal(other);}
 
 }

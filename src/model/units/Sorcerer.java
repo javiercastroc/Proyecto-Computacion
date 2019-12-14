@@ -130,5 +130,5 @@ public class Sorcerer extends AbstractUnit {
     }
 
     @Override
-    public void useItem(IUnit other) {this.attack(other); }
+    public void useItem(AbstractUnit other) {this.attack(other); }
 }

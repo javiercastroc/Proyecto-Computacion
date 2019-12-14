@@ -1,5 +1,6 @@
 package model.units;
 
+import model.Tactician;
 import model.items.*;
 import model.map.Location;
 
@@ -32,6 +33,10 @@ public class Hero extends AbstractUnit {
     super(hitPoints, movement, location, 3, items);
   }
 
+  public Hero(final int hitPoints, final int movement, final Location location, final Tactician owner,
+              IEquipableItem... items) {
+    super(hitPoints, movement, location, 3, owner , items);
+  }
   /**
    * Sets the currently equipped item of this unit.
    *
@@ -48,12 +53,14 @@ public class Hero extends AbstractUnit {
     if (getEquippedItem() != null) {
       receiveWeaknessAttack(attack);
     }
+    else{receiveAttack(attack);}
   }
   @Override
   public void receiveSwordAttack(Sword attack) {
     if (getEquippedItem() != null) {
       receiveResistantAttack(attack);
     }
+    else{receiveAttack(attack);}
   }
 
   @Override
@@ -80,8 +87,9 @@ public class Hero extends AbstractUnit {
   }
 
   @Override
-  public void useItem(IUnit other) {this.attack(other); }
+  public void useItem(AbstractUnit other) {this.attack(other); }
 
   @Override
-  public void died() { heroNotification.firePropertyChange(new PropertyChangeEvent(this, "HeroDeath", "", this));}
+  public void died() {
+    heroNotification.firePropertyChange(new PropertyChangeEvent(this, "HeroDeath", "", this));}
 }

@@ -1,12 +1,10 @@
 package model.handlers;
 
 import model.Tactician;
-import controller.GameController;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import model.units.*;
 
-import model.map.Location;
 import model.units.AbstractUnit;
 
 public class DeathHandler implements PropertyChangeListener{
@@ -26,6 +24,6 @@ public class DeathHandler implements PropertyChangeListener{
      */
     @Override
     public void propertyChange(final PropertyChangeEvent evt) {
-        tactician.killedUnit(((IUnit)evt.getNewValue()));
+        tactician.killedUnit(((AbstractUnit)evt.getNewValue()));
     }
 }

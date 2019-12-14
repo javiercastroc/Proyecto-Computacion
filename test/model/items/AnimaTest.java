@@ -2,7 +2,6 @@ package model.items;
 
 import model.map.Location;
 import model.units.*;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,8 +17,8 @@ class AnimaTest extends AbstractTestItem {
 
     private Anima anima;
     private Anima wrongAnima;
-    private IUnit fighter;
-    private IUnit alpaca;
+    private AbstractUnit fighter;
+    private AbstractUnit alpaca;
     private Archer archer;
     private Cleric cleric;
     private Hero hero;
@@ -73,7 +72,7 @@ class AnimaTest extends AbstractTestItem {
      * @return a unit that can equip the item being tested
      */
     @Override
-    public IUnit getTestUnit() {
+    public AbstractUnit getTestUnit() {
         return sorcererAnima;
     }
 

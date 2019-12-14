@@ -136,14 +136,13 @@ public class Field {
   public void generateMap(int mapSize) {
     map.clear();
     int l = mapSize;
-
+    List<Location> locations = new ArrayList<Location>();
     for (int i = 0; i < l; i++) {
       for (int j = 0; j < l; j++) {
-        this.addCell(new Location(i, j));
-        addConnection(new Location(i, j), new Location(i - 1, j));
+        locations.add(new Location(i, j));
       }
     }
-    connectMap(mapSize);
+    addCells(true,locations.toArray(new Location[0]));
   }
 
   public int getSize() {
@@ -154,13 +153,6 @@ public class Field {
     return counter;
   }
 
-  private void connectMap(int mapSize) {
-    for (int i = 0; i < mapSize; i++) {
-      for (int j = 0; j < mapSize; j++) {
-        int l =getAdjacentCells(getCell(i,j)).length;
-        for(int u=0; u<l;u++){
-          if(checkConnection(getCell(i,j),getAdjacentCells(getCell(i,j))[u])==false){
-          addConnection(getCell(i,j),getAdjacentCells(getCell(i,j))[u]);
-        }}}}}
+
 
 }

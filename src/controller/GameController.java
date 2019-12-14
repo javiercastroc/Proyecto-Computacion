@@ -2,17 +2,21 @@ package controller;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+
 import model.Tactician;
+import model.factory.*;
+import model.handlers.DeathHandler;
+import model.handlers.HeroHandler;
+import model.items.AbstractItem;
 import model.items.IEquipableItem;
 import model.map.Field;
 import model.map.Location;
-import model.units.IUnit;
-import model.handlers.AttackHandler;
+import model.units.AbstractUnit;
+import model.handlers.SelectHandler;
 import model.handlers.PassTurnHandler;
-import java.util.Collections;
+import model.units.IUnit;
+import model.units.Sorcerer;
 
 /**
  * Controller of the game.
@@ -28,13 +32,32 @@ public class GameController {
   private List<Tactician> tacticians = new ArrayList<Tactician>();
   private Field map=new Field();
   private Tactician turn;
-  private int roundNumber;
+  private int roundNumber=0;
   private int maxRounds;
+  private int randomNumbers=0;
   private IUnit selectedUnit;
   private List<Tactician> turns = new ArrayList<Tactician>();
   private IEquipableItem item;
+  private Random randomSeedGenerator;
   private Boolean initedGame=false;
+  private long randomSeed;
+  private int indexTurn;
   private List<String> winners = new ArrayList<>();
+  public AlpacaFactory alpacaFactory=new AlpacaFactory();
+  public ArcherFactory archerFactory=new ArcherFactory();
+  public ClericFactory clericFactory=new ClericFactory();
+  public FighterFactory fighterFactory=new FighterFactory();
+  public HeroFactory heroFactory=new HeroFactory(this);
+  public SorcererFactory sorcererFactory=new SorcererFactory();
+  public SwordMasterFactory swordMasterFactory=new SwordMasterFactory();
+  public AnimaFactory  animaFactory=new AnimaFactory();
+  public AxeFactory axeFactory=new AxeFactory();
+  public BowFactory bowFactory=new BowFactory();
+  public LuzFactory luzFactory=new LuzFactory();
+  protected OscuridadFactory oscuridadFactory=new OscuridadFactory();
+  protected SpearFactory  spearFactory=new SpearFactory();
+  protected SwordFactory swordFactory=new SwordFactory();
+
   public PropertyChangeSupport
           limitRoundsNotification = new PropertyChangeSupport(this);
 
@@ -46,18 +69,22 @@ public class GameController {
    * @param mapSize         the dimensions of the map, for simplicity, all maps are squares
    */
   GameController(int numberOfPlayers, int mapSize) {
-    this.limitRoundsNotification.addPropertyChangeListener(new AttackHandler(this));
+    this.limitRoundsNotification.addPropertyChangeListener(new SelectHandler(this));
     this.map.generateMap(mapSize);
+    randomSeedGenerator=new Random(mapSize);
+    this.randomSeed = randomSeedGenerator.nextLong();
     String name;
     for (int i = 0; numberOfPlayers > i; i++) {
         name = ("Player " + (i));
         tacticians.add(new Tactician(name,this.map));
-        tacticians.get(i).attackNotification.addPropertyChangeListener(new AttackHandler(this));
+        tacticians.get(i).selectNotification.addPropertyChangeListener(new SelectHandler(this));
         tacticians.get(i).passTurnNotification.addPropertyChangeListener(new PassTurnHandler(this));
     }
     users=tacticians;
     this.turn = tacticians.get(0);
+    tacticians.get(0).setTurn();
     turns=tacticians;
+    createFactories();
   }
 
 
@@ -80,7 +107,7 @@ public class GameController {
    * @return the tactician that's currently playing
    */
   Tactician getTurnOwner() {
-    return turn;
+    return turns.get(indexTurn);
   }
 
   /**
@@ -101,15 +128,17 @@ public class GameController {
    * Finishes the current player's turn.
    */
   public void endTurn() {
-    int index = turns.indexOf(getTurnOwner());
-    if (index+1!=turns.size()) {
-      this.turn = turns.get(index + 1);
+
+    if (indexTurn+1!=turns.size()) {
+      indexTurn++;
+      this.turn = turns.get(indexTurn);
       this.turn.setTurn();
     }
     else{
+      this.roundNumber += 1;
       if(getRoundNumber()!=getMaxRounds()+1){
-        this.roundNumber += 1;
         setTurns();
+        this.indexTurn=0;
         this.turn.setTurn(); }
       else{limitRoundsNotification.firePropertyChange(new PropertyChangeEvent(this, "LimitRounds", "", ""));}
     }
@@ -122,11 +151,15 @@ public class GameController {
    */
   public void removeTactician(String tactician) {
       if(getTurnOwner().getName().equals(tactician)){
+        this.indexTurn--;
           endTurn();
       }
     tacticians.remove(searchTactician(tactician));
-    turns.remove(searchTactician(tactician));
-  }
+      for(int i=0;turns.size()>i;i++){
+        if(turns.get(i).getName()==tactician){
+          turns.remove(i);
+        }
+  }}
 
   public Tactician searchTactician(String name){
       int size =tacticians.size();
@@ -136,8 +169,9 @@ public class GameController {
         }
     }return null;}
 
-  public void removeUnit(IUnit unit) {
-    getOwner(unit).killedUnit(unit);
+
+  public void killUnit(AbstractUnit unit) {
+     unit.died();
   }
 
   /**
@@ -149,19 +183,15 @@ public class GameController {
       winners.clear();
       tacticians= users;
       turns=tacticians;
-    if(rounds==-1) {
-      initEndlessGame();}
+    this.indexTurn=0;
+    if(rounds==-1) { initEndlessGame();}
     if(rounds>0){
       this.initedGame=true;
-      this.roundNumber=1;
       this.maxRounds = rounds;
       setTurns();
       this.turn=turns.get(0);
       turns.get(0).setTurn();
-
-    }
-
-  }
+      this.roundNumber=1; } }
 
   /**
    * Starts a game without a limit of turns.
@@ -172,8 +202,8 @@ public class GameController {
       turns=tacticians;
     this.initedGame=true;
     this.maxRounds = -1;
-    this.roundNumber=1;
     setTurns();
+    this.roundNumber=1;
     this.turn=turns.get(0);
     turns.get(0).setTurn();
   }
@@ -201,7 +231,7 @@ public class GameController {
    * @return the current player's selected unit
    */
   public IUnit getSelectedUnit() {
-    return getTurnOwner().getSelectedUnit();
+    return selectedUnit;
   }
 
   /**
@@ -211,14 +241,29 @@ public class GameController {
    * @param y vertical position of the unit
    */
   public void selectUnitIn(int x, int y) {
-    selectedUnit = this.map.getCell(y, x).getUnit();
+    if (getGameMap().getCell(y, x).getUnit() != null) {
+
+    if(getTurnOwner()==getOwner(getGameMap().getCell(y,x).getUnit())) {
+      selectedUnit =this.map.getCell(y, x).getUnit();
+      getTurnOwner().selectUnit((AbstractUnit) selectedUnit);
+    }
+  }}
+
+  public void selectUnit(AbstractUnit unit) {
+    if(getTurnOwner()==getOwner(unit)) {
+      selectedUnit =unit;
+      if(getTurnOwner().getSelectedUnit()==null){getTurnOwner().selectUnit((AbstractUnit) selectedUnit);}
+      if(getTurnOwner().getSelectedUnit()!=unit){
+      getTurnOwner().selectUnit((AbstractUnit) selectedUnit);
+    }}
   }
 
   /**
    * @return the inventory of the currently selected unit.
    */
   public List<IEquipableItem> getItems() {
-    return getTurnOwner().getSelectedUnit().getItems();
+    if(getSelectedUnit()==null){return null;}
+    return getTurnOwner().getInventory();
   }
 
   /**
@@ -227,8 +272,13 @@ public class GameController {
    * @param index the location of the item in the inventory.
    */
   public void equipItem(int index) {
+    if(getSelectedUnit()!=null ){
     getSelectedUnit().equipItem(getItems().get(index));
+  }}
 
+  public AbstractItem getEquipItem() {
+    if(getSelectedUnit()!=null){ return (AbstractItem) getSelectedUnit().getEquippedItem();}
+    else return null;
   }
 
   /**
@@ -238,14 +288,12 @@ public class GameController {
    * @param y vertical position of the target
    */
   public void useItemOn(int x, int y) {
-    getSelectedUnit().useItem(this.map.getCell(y, x).getUnit());
-  }
+    if(getSelectedUnit()!=null && getEquipItem()!=null && this.map.getCell(y, x).getUnit()!=null){
+    getEquipItem().use(map.getCell(y, x).getUnit()); }}
 
   public void move(int x, int y) {
     if (map.getCell(y, x).getUnit() == null) {
-      getSelectedUnit().moveTo(this.map.getCell(y, x));
-    }
-  }
+      getSelectedUnit().moveTo(this.map.getCell(y, x)); }}
 
   /**
    * Selects an item from the selected unit's inventory.
@@ -253,8 +301,9 @@ public class GameController {
    * @param index the location of the item in the inventory.
    */
   public void selectItem(int index) {
+    if(getItems()!=null){
     this.item = getTurnOwner().getSelectedUnit().getItems().get(index);
-  }
+  }}
 
   /**
    * Gives the selected item to a target unit.
@@ -268,30 +317,64 @@ public class GameController {
 
 
 
+public void setRandomSeed(){
+    this.randomSeed=this.randomSeedGenerator.nextLong();
+    this.randomNumbers++;
+}
 
   public void setTurns() {
-      Tactician nonrep=getTurnOwner();
+    Tactician nonrep=getTurnOwner();
+    setRandomSeed();
     if(getTurnOwner()!=null){
-      Collections.shuffle(turns);
+      Collections.shuffle(turns,new Random(randomSeed));
       while(getTurns().get(0)==nonrep && this.roundNumber!=0){
-        Collections.shuffle(turns);}}
-    else{
-      Collections.shuffle(turns); }
-    this.turn=tacticians.get(0);}
-
+        setRandomSeed();
+        Collections.shuffle(turns,new Random(randomSeed));;}}
+    this.turn=turns.get(0);}
 
   public List<Tactician> getTurns() {
     return List.copyOf(turns);
   }
 
-  public Tactician getOwner(IUnit unit){
+  public Tactician getOwner(AbstractUnit unit){
     int length = tacticians.size();
       for(int i=0;length > i;i++){
         if(tacticians.get(i).getUnits().contains(unit)){
-          return tacticians.get(i);
-        }
-      }
+          return tacticians.get(i); } }
       return null;
     }
+
+    public void asignUnit(AbstractUnit unit,Tactician tactician){
+      unit.setOwner(tactician);
+    tactician.addUnit(unit);
+    tactician.deathNotify(unit);
+    }
+
+    public List<AbstractUnit> getUnits(){
+    return getTurnOwner().getUnits();
+    }
+
+  public void setLocation(int x,int y, AbstractUnit unit){
+    if(map.getCell(y,x).getUnit()==null){
+      unit.setLocation(map.getCell(y,x));
+    }
+  }
+
+  public void createFactories(){
+    alpacaFactory=new AlpacaFactory();
+    archerFactory=new ArcherFactory();
+    clericFactory=new ClericFactory();
+    fighterFactory=new FighterFactory();
+    heroFactory=new HeroFactory(this);
+    sorcererFactory=new SorcererFactory();
+    swordMasterFactory=new SwordMasterFactory();
+    animaFactory=new AnimaFactory();
+    axeFactory=new AxeFactory();
+    bowFactory=new BowFactory();
+    luzFactory=new LuzFactory();
+    oscuridadFactory=new OscuridadFactory();
+    spearFactory=new SpearFactory();
+    swordFactory=new SwordFactory();
+  }
 
 }

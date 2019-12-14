@@ -1,6 +1,6 @@
 package model.items;
 
-import model.units.IUnit;
+import model.units.AbstractUnit;
 
 /**
  * @author Ignacio Slater Muñoz
@@ -30,13 +30,16 @@ public class Bow extends AbstractItem {
   }
 
   @Override
-  public void equipTo(final IUnit unit) {
+  public void equipTo(final AbstractUnit unit) {
     if (unit.getItems().contains(this) && this.getOwner()==unit){
     unit.equipBow(this);}
   }
 
   @Override
-  public void attack(IUnit other) {
+  public void attack(AbstractUnit other) {
     other.receiveBowAttack(this);
   }
+
+  @Override
+  public void use(AbstractUnit other) { this.attack(other);}
 }
