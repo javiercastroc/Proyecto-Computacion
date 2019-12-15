@@ -329,4 +329,35 @@ class GameControllerTest {
     assertTrue(controller.getWinners().contains("Player 3"));
   }
 
+  @Test
+  void unitFactoryTest(){
+    Alpaca alpacaFactory =controller.alpacaFactory.create();
+    Archer archerFactory =controller.archerFactory.create();
+    Cleric clericFactory =controller.clericFactory.create();
+    Fighter fighterFactory =controller.fighterFactory.create();
+    Hero heroFactory =controller.heroFactory.create();
+    Sorcerer sorcererFactory =controller.sorcererFactory.create();
+    SwordMaster swordMasterFactory =controller.swordMasterFactory.create();
+    Alpaca alpacaTest =new Alpaca(100, 5,new InvalidLocation());
+    Archer archerTest =new Archer(100, 5,new InvalidLocation());
+    Cleric clericTest =new Cleric(100, 5,new InvalidLocation());
+    Fighter fighterTest =new Fighter(100, 5,new InvalidLocation());
+    Hero heroTest =new Hero(200, 5,new InvalidLocation());
+    Sorcerer sorcererTest =new Sorcerer(100, 5,new InvalidLocation());
+    SwordMaster swordMasterTest =new SwordMaster(100, 5,new InvalidLocation());
+    unitTest(alpacaFactory,alpacaTest);
+    unitTest(archerFactory,archerTest);
+    unitTest(clericFactory,clericTest);
+    unitTest(fighterFactory,fighterTest);
+    unitTest(heroFactory,heroTest);
+    unitTest(sorcererFactory,sorcererTest);
+    unitTest(swordMasterFactory,swordMasterTest);
+
+  }
+@Test
+  void unitTest(AbstractUnit unit1,AbstractUnit unit2){
+    assertEquals(unit1.getLocation().toString(),unit2.getLocation().toString());
+    assertEquals(unit1.getMaxHitPoints(),unit2.getMaxHitPoints());
+    assertEquals(unit1.getMovement(),unit2.getMovement());
+  }
 }
