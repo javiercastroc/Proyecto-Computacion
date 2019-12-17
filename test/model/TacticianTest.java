@@ -1,17 +1,7 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-import java.util.stream.IntStream;
 
 import controller.GameController;
-import model.Tactician;
-import model.map.Field;
-import model.map.InvalidLocation;
-import model.map.Location;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import model.items.*;
@@ -20,18 +10,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 /**
- * @author Javier Castro
+ * @author Javier Castro Cuevas
  * @since v2.0
  */
 public class TacticianTest {
     private GameController controller;
 
+    /**
+     * Sets up the controller(tacticians and map) and seed
+     */
     @BeforeEach
     void setUp() {
         // Se define la semilla como un número aleatorio para generar variedad en los tests
         controller = new GameController(2, 4);
     }
 
+    /**
+     * Checks the correct performance of creation of tacticians in controller
+     */
     @Test
     void tacticianCreationTest(){
         Tactician tactician0 = new Tactician("Player 0", controller.getGameMap());
@@ -43,6 +39,10 @@ public class TacticianTest {
         assertEquals(tactician1.getUnits(),controller.getTacticians().get(1).getUnits());
     }
 
+
+    /**
+     * Checks the correct performance of assignating units to Tacticians
+     */
     @Test
     void asignUnitTest(){
         Alpaca alpaca=controller.alpacaFactory.create();
@@ -55,7 +55,9 @@ public class TacticianTest {
         assertTrue(controller.getTacticians().get(1).isMyTurn());
     }
 
-
+    /**
+     * Checks the correct performance of movement (no 2 units in the same cell) and turns perfomnce
+     */
     @Test
     void moveTest(){
         Alpaca alpaca=controller.alpacaFactory.create();
@@ -69,6 +71,10 @@ public class TacticianTest {
         assertEquals(alpaca.getLocation(),controller.getGameMap().getCell(0,0));
     }
 
+
+    /**
+     * Checks the correct performance of giving items
+     */
 @Test
     void giveItemTest(){
         Alpaca alpaca=controller.alpacaFactory.create();
@@ -90,6 +96,10 @@ public class TacticianTest {
         assertTrue(archer.getItems().contains(axe));
 
     }
+
+    /**
+     * Checks the correct performance of equipping items and turns performance
+     */
     @Test
     void equipItemTest(){
         Archer archer=controller.archerFactory.create();
@@ -102,6 +112,10 @@ public class TacticianTest {
         assertEquals(bow,archer.getEquippedItem());
     }
 
+
+    /**
+     * Checks the correct performance while asking units and item information
+     */
     @Test
  void getInfoTest(){
         Archer archer=controller.archerFactory.create();
@@ -115,6 +129,9 @@ public class TacticianTest {
 
     }
 
+    /**
+     * Checks the correct performance of passing turns
+     */
     @Test
     void passTurnTest(){
         controller.tactician(0).passTurn();
@@ -122,6 +139,9 @@ public class TacticianTest {
     }
 
 
+    /**
+     * Checks the correct performance of combats and turns
+     */
     @Test
     void combatTest(){
         Archer archer=controller.archerFactory.create();

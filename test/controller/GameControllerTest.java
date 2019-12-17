@@ -18,7 +18,7 @@ import model.units.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * @author Ignacio Slater Muñoz
+ * @author Javier Castro Cuevas
  * @since v2.0
  */
 class GameControllerTest {

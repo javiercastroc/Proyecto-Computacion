@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>model.factory</OriginalElement>
+  <nodes>
+    <node x="0.0" y="141.0">model.factory.OscuridadFactory</node>
+    <node x="0.0" y="236.0">model.factory.ClericFactory</node>
+    <node x="0.0" y="331.0">model.factory.AnimaFactory</node>
+    <node x="182.0" y="236.0">model.factory.AlpacaFactory</node>
+    <node x="252.0" y="0.0">model.factory.SwordMasterFactory</node>
+    <node x="175.0" y="331.0">model.factory.StaffFactory</node>
+    <node x="203.0" y="141.0">model.factory.SorcererFactory</node>
+    <node x="364.0" y="236.0">model.factory.ArcherFactory</node>
+    <node x="175.0" y="426.0">model.factory.LuzFactory</node>
+    <node x="350.0" y="331.0">model.factory.SwordFactory</node>
+    <node x="399.0" y="141.0">model.factory.FighterFactory</node>
+    <node x="336.0" y="426.0">model.factory.AxeFactory</node>
+    <node x="0.0" y="0.0">model.factory.HeroFactory</node>
+    <node x="0.0" y="426.0">model.factory.SpearFactory</node>
+    <node x="0.0" y="521.0">model.factory.BowFactory</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Group" zoom="0.8898305084745762" x="219.0" y="216.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

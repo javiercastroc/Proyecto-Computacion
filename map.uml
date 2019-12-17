@@ -3,23 +3,26 @@
   <ID>JAVA</ID>
   <OriginalElement>model.map</OriginalElement>
   <nodes>
-    <node x="350.0" y="0.0">model.map.Field</node>
+    <node x="349.0" y="0.0">model.map.Field</node>
     <node x="0.0" y="0.0">model.map.Location</node>
-    <node x="50.5" y="364.0">model.map.InvalidLocation</node>
+    <node x="50.0" y="411.0">model.map.InvalidLocation</node>
   </nodes>
   <notes />
   <edges>
     <edge source="model.map.InvalidLocation" target="model.map.Location">
-      <point x="0.0" y="-36.0" />
-      <point x="0.0" y="157.0" />
+      <point x="0.0" y="-47.5" />
+      <point x="0.0" y="180.5" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="1.0" x="290.5" y="184.0" />
+  <settings layout="Hierarchic Group" zoom="1.0" x="319.5" y="190.0" />
   <SelectedNodes>
-    <node>model.map.Location</node>
+    <node>model.map.Field</node>
   </SelectedNodes>
   <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
     <Category>Methods</Category>
+    <Category>Properties</Category>
     <Category>Inner Classes</Category>
   </Categories>
   <SCOPE>All</SCOPE>
