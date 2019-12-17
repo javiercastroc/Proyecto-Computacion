@@ -6,7 +6,7 @@ import model.units.AbstractUnit;
  * @author Ignacio Slater Muñoz
  * @since 1.0
  */
-public class Bow extends AbstractItem {
+public class Bow extends AttackItem {
 
   /**
    * Creates a new bow.
@@ -40,6 +40,5 @@ public class Bow extends AbstractItem {
     other.receiveBowAttack(this);
   }
 
-  @Override
-  public void use(AbstractUnit other) { this.attack(other);}
+
 }

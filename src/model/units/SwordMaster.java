@@ -69,5 +69,5 @@ public class SwordMaster extends AbstractUnit {
     else receiveAttack(attack);
   }
   @Override
-  public void useItem(AbstractUnit other) {this.attack(other); }
+  public void useItem(AbstractUnit other) {this.getEquippedItem().use(other); }
 }

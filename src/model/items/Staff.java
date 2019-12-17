@@ -10,7 +10,7 @@ import model.units.AbstractUnit;
  * @author Ignacio Slater Muñoz
  * @since 1.0
  */
-public class Staff extends AbstractItem {
+public class Staff extends HealItem {
 
   /**
    * Creates a new Staff item.
@@ -34,10 +34,5 @@ public class Staff extends AbstractItem {
     unit.equipStaff(this);}
   }
 
-  public void heal(AbstractUnit other) {
-    other.receiveStaffHeal(this);}
-
-  @Override
-  public void use(AbstractUnit other){ this.heal(other);}
 
 }

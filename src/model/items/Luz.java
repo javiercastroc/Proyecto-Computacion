@@ -10,7 +10,7 @@ import model.units.AbstractUnit;
  * @author Ignacio Slater Muñoz
  * @since 1.0
  */
-public class Luz extends AbstractItem {
+public class Luz extends AttackItem {
 
     /**
      * Creates a new Axe item
@@ -43,7 +43,6 @@ public class Luz extends AbstractItem {
      * luz is strong against oscuridad
      * @param attack
      */
-    @Override
     public void oscuridadVS(AbstractItem attack){
         (this.getOwner()).menor(attack);}
 
@@ -52,7 +51,6 @@ public class Luz extends AbstractItem {
      * luz is normal against luz
      * @param attack
      */
-    @Override
     public void luzVS(AbstractItem attack){
         (this.getOwner()).normal(attack);}
 
@@ -61,10 +59,6 @@ public class Luz extends AbstractItem {
      * luz is weak against anima
      * @param attack
      */
-    @Override
     public void animaVS(AbstractItem attack){
         (this.getOwner()).mayor(attack);}
-
-    @Override
-    public void use(AbstractUnit other) { this.attack(other);}
 }

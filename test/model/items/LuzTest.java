@@ -133,7 +133,5 @@ class LuzTest extends AbstractTestItem {
         assertEquals(80, sorcererLuz.getCurrentHitPoints());
         assertEquals(70, sorcererOscuridad.getCurrentHitPoints());
         assertEquals(70, swordMaster.getCurrentHitPoints());
-        luz.heal(alpaca);
-        assertEquals(80, alpaca.getCurrentHitPoints());
     }
 }

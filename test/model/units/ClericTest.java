@@ -137,13 +137,13 @@ public class ClericTest extends AbstractTestUnit {
     assertEquals(80,sorcerer.getCurrentHitPoints());
     cleric.addItem(staff);
     cleric.equipItem(staff);
-    cleric.heal(fighter);
-    cleric.heal(alpaca);
-    cleric.heal(archer);
-    cleric.heal(clerico);
-    cleric.heal(hero);
-    cleric.heal(swordMaster);
-    cleric.heal(sorcerer);
+    cleric.useItem(fighter);
+    cleric.useItem(alpaca);
+    cleric.useItem(archer);
+    cleric.useItem(clerico);
+    cleric.useItem(hero);
+    cleric.useItem(swordMaster);
+    cleric.useItem(sorcerer);
     assertEquals(100,fighter.getCurrentHitPoints());
     assertEquals(100,alpaca.getCurrentHitPoints());
     assertEquals(100,archer.getCurrentHitPoints());
@@ -163,7 +163,7 @@ public class ClericTest extends AbstractTestUnit {
     Fighter fighter = new Fighter(0, 5, new Location(0, 1));
     cleric.addItem(staff);
     cleric.equipItem(staff);
-    cleric.heal(fighter);
+    cleric.useItem(fighter);
     assertEquals(0,fighter.getCurrentHitPoints());
     Bow bow = new Bow("Bow", 10, 1, 2);
     Fighter fighter1 = new Fighter(30, 5, new Location(1, 0));
@@ -171,7 +171,7 @@ public class ClericTest extends AbstractTestUnit {
     bow.attack(fighter1);
     assertEquals(20,fighter1.getCurrentHitPoints());
     assertTrue(cleric.isInRange(fighter1));
-    cleric.heal(fighter1);
+    cleric.useItem(fighter1);
     assertEquals(30,fighter1.getCurrentHitPoints());
   }
 

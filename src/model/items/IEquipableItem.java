@@ -55,19 +55,9 @@ public interface IEquipableItem {
    */
   int getMaxRange();
 
-  /**
-   * attack other unit with this item
-   *
-   * @param other unit to attack
-   */
-  void attack(AbstractUnit other);
+    void use(AbstractUnit unit);
 
-  /**
-   * heals other unit with this item
-   *
-   * @param other unit to heal
-   */
-    void heal(AbstractUnit other);
+    void counterAttack(AbstractUnit unit);
 
 
     /**
@@ -75,21 +65,22 @@ public interface IEquipableItem {
      *
      * @param attack, item that is attacking
      */
-  void oscuridadVS(AbstractItem attack);
+    void oscuridadVS(AbstractItem attack);
 
-  /**
-   * send a message to this item; that is being attacked with a luz item
-   *
-   * @param attack, item that is attacking
-   */
-  void luzVS(AbstractItem attack);
+    /**
+     * send a message to this item; that is being attacked with a luz item
+     *
+     * @param attack, item that is attacking
+     */
+    void luzVS(AbstractItem attack);
 
-  /**
-   * send a message to this item; that is being attacked with a anima item
-   *
-   * @param attack, item that is attacking
-   */
-  void animaVS(AbstractItem attack);
+    /**
+     * send a message to this item; that is being attacked with a anima item
+     *
+     * @param attack, item that is attacking
+     */
+    void animaVS(AbstractItem attack);
 
-  void use(AbstractUnit unit);
+
+
 }

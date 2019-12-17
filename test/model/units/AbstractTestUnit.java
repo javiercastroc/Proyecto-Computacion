@@ -35,7 +35,9 @@ public abstract class AbstractTestUnit implements ITestUnit {
   protected Sorcerer sorcererAnima;
   protected Sorcerer sorcererOscuridad;
 
-
+  /**
+   * set up alpaca to test
+   */
   @Override
   public void setTargetAlpaca() {
     targetAlpaca = new Alpaca(50, 2, field.getCell(1, 0));
@@ -309,7 +311,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
   public void attackWithoutWeaponTest(){
     getTestUnit().addItem(null);
     int vidainicial=getTargetAlpaca().getCurrentHitPoints();
-    getTestUnit().attack(getTargetAlpaca());
+    getTestUnit().attack(getTargetAlpaca(),null);
     assertEquals(getTargetAlpaca().getCurrentHitPoints(),vidainicial);
   }
 

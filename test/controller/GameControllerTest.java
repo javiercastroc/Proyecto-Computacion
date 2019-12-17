@@ -31,9 +31,12 @@ class GameControllerTest {
   private SwordMaster swordMaster;
   private Sword sword;
   private Spear spear;
-  private Field field;
-  private Location location1;
 
+
+  /**
+   * Sets up the controller and seed
+   * Sets up the units, weapons and map to be tested
+   */
   @BeforeEach
   void setUp() {
     // Se define la semilla como un número aleatorio para generar variedad en los tests
@@ -48,6 +51,9 @@ class GameControllerTest {
       swordMaster = new SwordMaster(100, 5, controller.getGameMap().getCell(1, 1),controller.getTacticians().get(1));
   }
 
+  /**
+   * Checks if all tacticians are on the list of controller
+   */
   @Test
   void getTacticians() {
     List<Tactician> tacticians = controller.getTacticians();
@@ -57,24 +63,27 @@ class GameControllerTest {
     }
   }
 
-  @Test
-  void setUpTest() {
-    }
 
+  /**
+   * Checks the map and its creation
+   */
   @Test
   void getGameMap() {
     Field gameMap = controller.getGameMap();
     assertEquals(4, gameMap.getSize());
     assertTrue(controller.getGameMap().isConnected());
-    Random testRandom = new Random(randomSeed);
     Field testMap =new Field();
     testMap.generateMap(gameMap.getSize());
     assertEquals(testMap.getSize(),gameMap.getSize());
   }
 
+
+  /**
+   * Checks how the turn owner works
+   * Checks how the setting of turns work
+   */
   @Test
   void getTurnOwner() {
-    //  En este caso deben hacer lo mismo que para el mapa
     assertEquals(controller.getTurnOwner(),controller.getTurns().get(0));
       assertEquals(controller.getTurnOwner().getName(),testTacticians.get(0));
       ArrayList<Tactician> turnos = new ArrayList<>(controller.getTurns().size());
@@ -98,6 +107,9 @@ class GameControllerTest {
       assertEquals(turnos,controller.getTurns());
   }
 
+  /**
+   * Checks how the rounds and their number workds
+   */
   @Test
   void getRoundNumber() {
     controller.initGame(10);
@@ -109,6 +121,11 @@ class GameControllerTest {
     }
   }
 
+
+  /**
+   * Checks the maxRounds number
+   * and it winners condition
+   */
   @Test
   void getMaxRounds() {
     Random randomTurnSequence = new Random();
@@ -121,10 +138,13 @@ class GameControllerTest {
     assertEquals(-1, controller.getMaxRounds());
   }
 
+
+  /**
+   * Checks how the endTurn method work
+   */
   @Test
   void endTurn() {
       Tactician firstPlayer = controller.getTurnOwner();
-      // Nuevamente, para determinar el orden de los jugadores se debe usar una semilla
     Tactician secondPlayer = new Tactician("Player 1", controller.getGameMap()); // <- Deben cambiar esto (!)
     assertNotEquals(secondPlayer.getName(), firstPlayer.getName());
 
@@ -133,6 +153,11 @@ class GameControllerTest {
     assertEquals(secondPlayer.getName(), controller.getTurnOwner().getName());
   }
 
+
+  /**
+   * Checks the removeTactician method and checks
+   * what changes when it applies
+   */
   @Test
   void removeTactician() {
     assertEquals(4, controller.getTacticians().size());
@@ -153,6 +178,9 @@ class GameControllerTest {
         .forEach(tactician -> Assertions.assertTrue(testTacticians.contains(tactician.getName())));
   }
 
+  /**
+   * Checks the winners conditions
+   */
   @Test
   void getWinners() {
     controller.initGame(2);
@@ -179,6 +207,10 @@ class GameControllerTest {
     assertTrue(List.of("Player 3").containsAll(controller.getWinners()));
   }
 
+  /**
+   * Checks how to select units
+   * and how the getSelectedUnit works
+   */
   @Test
   void getSelectedUnit() {
       assertNull(controller.getSelectedUnit());
@@ -199,6 +231,10 @@ class GameControllerTest {
 
   }
 
+
+  /**
+   * Checks how select unit in location works
+   */
   @Test
   void selectUnitIn() {
     controller.selectUnitIn(0,0);
@@ -212,7 +248,9 @@ class GameControllerTest {
 
 
   }
-
+  /**
+   * Checks the items work (add items and get items of unit)
+   */
   @Test
   void getItems() {
     assertNull(controller.getItems());
@@ -228,7 +266,9 @@ class GameControllerTest {
 
 
   }
-
+  /**
+   * Checks how to equip items and it correct operation
+   */
   @Test
   void equipItem() {
     controller.asignUnit(hero,controller.getTurnOwner());
@@ -246,6 +286,9 @@ class GameControllerTest {
   }
 
 
+  /**
+   * Checks how use item on cell location works
+   */
   @Test
   void useItemOn() {
     endTurn();
@@ -260,6 +303,10 @@ class GameControllerTest {
     assertEquals(hero.getCurrentHitPoints(),hero.getMaxHitPoints()-sword.getPower());
   }
 
+
+  /**
+   * Checks how to give items and it correct perfomance
+   */
   @Test
   void giveItemTo() {
     controller.asignUnit(swordMaster,controller.getTurnOwner());
@@ -277,6 +324,9 @@ class GameControllerTest {
 
   }
 
+  /**
+   * Checks how to kill unit and it correct perfomance (remove from units list)
+   */
   @Test
   void killTest() {
     controller.endTurn();
@@ -288,15 +338,18 @@ class GameControllerTest {
     assertTrue(controller.getUnits().isEmpty());
   }
 
+  /**
+   * Checks how to move unit to target cell works
+   */
   @Test
   void moveTest() {
     controller.asignUnit(hero,controller.getTurnOwner());
     controller.selectUnit(hero);
-    assertTrue(controller.getTurnOwner().getSelectedUnit()==hero);
+    assertSame(controller.getTurnOwner().getSelectedUnit(), hero);
     controller.move(1,1);
-    assertTrue(controller.getGameMap().getCell(1,1).getUnit()==swordMaster);
+    assertSame(controller.getGameMap().getCell(1, 1).getUnit(), swordMaster);
     controller.move(1,0);
-    assertTrue(controller.getGameMap().getCell(0,1).getUnit()==hero);
+    assertSame(controller.getGameMap().getCell(0, 1).getUnit(), hero);
   }
 
   @Test
@@ -309,6 +362,9 @@ class GameControllerTest {
 
   }
 
+  /**
+   * Checks how the maxRound number activate winners (win condition)
+   */
   @Test
   void maxRoundTest(){
     controller.initGame(1);
@@ -329,6 +385,10 @@ class GameControllerTest {
     assertTrue(controller.getWinners().contains("Player 3"));
   }
 
+
+  /**
+   * Checks how unit factories work and it correct performance
+   */
   @Test
   void unitFactoryTest(){
     Alpaca alpacaFactory =controller.alpacaFactory.create();
@@ -352,12 +412,64 @@ class GameControllerTest {
     unitTest(heroFactory,heroTest);
     unitTest(sorcererFactory,sorcererTest);
     unitTest(swordMasterFactory,swordMasterTest);
-
   }
-@Test
+
+  /**
+   * it compare the fields of 2 units
+   * @param unit1 to compare
+   * @param unit2 to compare
+   */
   void unitTest(AbstractUnit unit1,AbstractUnit unit2){
     assertEquals(unit1.getLocation().toString(),unit2.getLocation().toString());
     assertEquals(unit1.getMaxHitPoints(),unit2.getMaxHitPoints());
     assertEquals(unit1.getMovement(),unit2.getMovement());
+    assertEquals(unit1.getClass(),unit2.getClass());
   }
+
+  /**
+   * Checks how item factories work and it correct performance
+   */
+  @Test
+  void itemFactoryTest(){
+    Anima animaFactory =controller.animaFactory.create();
+    Axe axeFactory =controller.axeFactory.create();
+    Bow bowFactory =controller.bowFactory.create();
+    Luz luzFactory =controller.luzFactory.create();
+    Oscuridad oscuridadFactory =controller.oscuridadFactory.create();
+    Spear spearFactory =controller.spearFactory.create();
+    Staff staffFactory =controller.staffFactory.create();
+    Sword swordFactory =controller.swordFactory.create();
+    Anima animaTest =new Anima("Anima", 20,1,3);
+    Axe axeTest =new Axe("Axe", 20,1,3);
+    Bow bowTest =new Bow("Bow", 20,2,4);
+    Luz luzTest =new Luz("Luz", 20,1,3);
+    Oscuridad oscuridadTest =new Oscuridad("Oscuridad", 20,1,3);
+    Spear spearTest =new Spear("Spear", 20,1,3);
+    Staff staffTest =new Staff("Staff", 20,1,3);
+    Sword swordTest =new Sword("Sword", 20,1,3);
+
+    itemTest(animaFactory,animaTest);
+    itemTest(axeFactory,axeTest);
+    itemTest(bowFactory,bowTest);
+    itemTest(luzFactory,luzTest);
+    itemTest(oscuridadFactory,oscuridadTest);
+    itemTest(spearFactory,spearTest);
+    itemTest(staffFactory,staffTest);
+    itemTest(swordFactory,swordTest);
+  }
+
+
+  /**
+   * it compare the fields of 2 items
+   * @param item1 to compare
+   * @param item2 to compare
+   */
+  void itemTest(AbstractItem item1, AbstractItem item2){
+    assertEquals(item1.getName(),item2.getName());
+    assertEquals(item1.getOwner(),item1.getOwner());
+    assertEquals(item1.getMinRange(),item2.getMinRange());
+    assertEquals(item1.getMaxRange(),item2.getMaxRange());
+    assertEquals(item1.getPower(),item2.getPower());
+  }
+
 }

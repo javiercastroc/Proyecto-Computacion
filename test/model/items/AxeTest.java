@@ -134,8 +134,6 @@ class AxeTest extends AbstractTestItem {
     assertEquals(70, sorcererLuz.getCurrentHitPoints());
     assertEquals(70, sorcererOscuridad.getCurrentHitPoints());
     assertEquals(100, swordMaster.getCurrentHitPoints());
-    axe.heal(alpaca);
-    assertEquals(80, alpaca.getCurrentHitPoints());
   }
   /**
    * check if methods luzVS, oscuridadVS, animaVS don't change things/parameters

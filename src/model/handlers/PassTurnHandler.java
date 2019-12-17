@@ -4,6 +4,7 @@ import controller.GameController;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import model.Tactician;
 import model.units.AbstractUnit;
 
 public class PassTurnHandler implements PropertyChangeListener{
@@ -22,10 +23,11 @@ public class PassTurnHandler implements PropertyChangeListener{
      *     and the property that has changed.
      */
     @Override
-    public void propertyChange(final PropertyChangeEvent evt) {
+    public void propertyChange(final PropertyChangeEvent evt){
+    if(evt.getNewValue()==controller.getTurnOwner()){
         controller.endTurn();
     }
-}
+}}
 
 
 

@@ -15,6 +15,7 @@ import model.map.Location;
 import model.units.AbstractUnit;
 import model.handlers.SelectHandler;
 import model.handlers.PassTurnHandler;
+import model.handlers.LimitRoundsHandler;
 import model.units.IUnit;
 import model.units.Sorcerer;
 
@@ -47,7 +48,7 @@ public class GameController {
   public ArcherFactory archerFactory=new ArcherFactory();
   public ClericFactory clericFactory=new ClericFactory();
   public FighterFactory fighterFactory=new FighterFactory();
-  public HeroFactory heroFactory=new HeroFactory(this);
+   HeroFactory heroFactory=new HeroFactory(this);
   public SorcererFactory sorcererFactory=new SorcererFactory();
   public SwordMasterFactory swordMasterFactory=new SwordMasterFactory();
   public AnimaFactory  animaFactory=new AnimaFactory();
@@ -56,6 +57,7 @@ public class GameController {
   public LuzFactory luzFactory=new LuzFactory();
   protected OscuridadFactory oscuridadFactory=new OscuridadFactory();
   protected SpearFactory  spearFactory=new SpearFactory();
+  protected StaffFactory  staffFactory=new StaffFactory();
   protected SwordFactory swordFactory=new SwordFactory();
 
   public PropertyChangeSupport
@@ -68,8 +70,8 @@ public class GameController {
    * @param numberOfPlayers the number of players for this game
    * @param mapSize         the dimensions of the map, for simplicity, all maps are squares
    */
-  GameController(int numberOfPlayers, int mapSize) {
-    this.limitRoundsNotification.addPropertyChangeListener(new SelectHandler(this));
+  public GameController(int numberOfPlayers, int mapSize) {
+    this.limitRoundsNotification.addPropertyChangeListener(new LimitRoundsHandler(this));
     this.map.generateMap(mapSize);
     randomSeedGenerator=new Random(mapSize);
     this.randomSeed = randomSeedGenerator.nextLong();
@@ -84,6 +86,8 @@ public class GameController {
     this.turn = tacticians.get(0);
     tacticians.get(0).setTurn();
     turns=tacticians;
+    turn=tacticians.get(0);
+    tacticians.get(0).setTurn();
     createFactories();
   }
 
@@ -91,7 +95,7 @@ public class GameController {
   /**
    * @return the list of all the tacticians participating in the game.
    */
-  List<Tactician> getTacticians() {
+  public List<Tactician> getTacticians() {
     return List.copyOf(tacticians);
   }
 
@@ -99,14 +103,14 @@ public class GameController {
   /**
    * @return the map of the current game
    */
-  Field getGameMap() {
+  public Field getGameMap() {
     return this.map;
   }
 
   /**
    * @return the tactician that's currently playing
    */
-  Tactician getTurnOwner() {
+  public Tactician getTurnOwner() {
     return turns.get(indexTurn);
   }
 
@@ -249,6 +253,10 @@ public class GameController {
     }
   }}
 
+  /**
+   * Selects a unit
+   * @param unit to select
+   */
   public void selectUnit(AbstractUnit unit) {
     if(getTurnOwner()==getOwner(unit)) {
       selectedUnit =unit;
@@ -276,6 +284,11 @@ public class GameController {
     getSelectedUnit().equipItem(getItems().get(index));
   }}
 
+
+  /**
+   * @return the equipped item of the selected unit (on the actual Tactician turn)
+   *
+   */
   public AbstractItem getEquipItem() {
     if(getSelectedUnit()!=null){ return (AbstractItem) getSelectedUnit().getEquippedItem();}
     else return null;
@@ -283,7 +296,6 @@ public class GameController {
 
   /**
    * Uses the equipped item on a target
-   *
    * @param x horizontal position of the target
    * @param y vertical position of the target
    */
@@ -316,12 +328,19 @@ public class GameController {
   }
 
 
-
+  /**
+   * Set a random seed and save it (and increase n° of random numbers)
+   * This is to get random turns each round
+   */
 public void setRandomSeed(){
     this.randomSeed=this.randomSeedGenerator.nextLong();
     this.randomNumbers++;
 }
 
+
+  /**
+   * Set the turns of this round without repeating Tacticians turns
+   */
   public void setTurns() {
     Tactician nonrep=getTurnOwner();
     setRandomSeed();
@@ -329,37 +348,69 @@ public void setRandomSeed(){
       Collections.shuffle(turns,new Random(randomSeed));
       while(getTurns().get(0)==nonrep && this.roundNumber!=0){
         setRandomSeed();
-        Collections.shuffle(turns,new Random(randomSeed));;}}
-    this.turn=turns.get(0);}
+        Collections.shuffle(turns,new Random(randomSeed));}}
+    this.turn=turns.get(0);
+    turn.setTurn();}
 
+
+
+  /**
+   * @return a list of Tacticians, that the Tactician position on the list refers
+   * the position of his turn in this round
+   */
   public List<Tactician> getTurns() {
-    return List.copyOf(turns);
+    return turns;
   }
 
+
+  /**
+   * @return the Tactician that owns this turn
+   */
   public Tactician getOwner(AbstractUnit unit){
     int length = tacticians.size();
-      for(int i=0;length > i;i++){
-        if(tacticians.get(i).getUnits().contains(unit)){
-          return tacticians.get(i); } }
+    for (Tactician tactician : tacticians) {
+      if (tactician.getUnits().contains(unit)) {
+        return tactician;
+      }
+    }
       return null;
     }
 
+  /**
+   * Assing unit to tactician
+   * add death notify of the unit to the tactician
+   * @param unit to be assigned
+   * @param tactician to assign unit
+   */
     public void asignUnit(AbstractUnit unit,Tactician tactician){
       unit.setOwner(tactician);
-    tactician.addUnit(unit);
-    tactician.deathNotify(unit);
+      tactician.addUnit(unit);
+      tactician.deathNotify(unit);
     }
 
+  /**
+   * @return a list of units that the actual turn Tactician has
+   */
     public List<AbstractUnit> getUnits(){
     return getTurnOwner().getUnits();
     }
 
+  /**
+   * Sets the location to a unit if the location cell is not filled
+   * @param unit to set in location
+   * @param x horizontal position of the target location
+   * @param y vertical position of the target location
+   */
   public void setLocation(int x,int y, AbstractUnit unit){
     if(map.getCell(y,x).getUnit()==null){
       unit.setLocation(map.getCell(y,x));
     }
   }
 
+
+/**
+ * Creates the factories of all units types and item types
+ */
   public void createFactories(){
     alpacaFactory=new AlpacaFactory();
     archerFactory=new ArcherFactory();
@@ -375,6 +426,28 @@ public void setRandomSeed(){
     oscuridadFactory=new OscuridadFactory();
     spearFactory=new SpearFactory();
     swordFactory=new SwordFactory();
+    staffFactory=new StaffFactory();
   }
+
+
+  /**
+   * @return the tactician of index in the tacticians list
+   * @param index of the Tactician in tacticians list
+   */
+  public Tactician tactician(int index){
+    return getTacticians().get(index);
+  }
+
+
+
+  /**
+   * Add item to unit if the game is not inited
+   * @param item to be added
+   * @param unit to add item
+   */
+  public void addItemTo(AbstractItem item, AbstractUnit unit){
+    if(initedGame==false) {
+    unit.addItem(item);
+  }}
 
 }

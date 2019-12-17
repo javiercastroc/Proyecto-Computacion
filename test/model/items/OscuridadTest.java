@@ -133,7 +133,5 @@ class OscuridadTest extends AbstractTestItem {
         assertEquals(100, sorcererLuz.getCurrentHitPoints());
         assertEquals(80, sorcererOscuridad.getCurrentHitPoints());
         assertEquals(70, swordMaster.getCurrentHitPoints());
-        oscuridad.heal(alpaca);
-        assertEquals(80, alpaca.getCurrentHitPoints());
     }
 }

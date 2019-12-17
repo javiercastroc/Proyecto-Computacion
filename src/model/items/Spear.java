@@ -10,7 +10,7 @@ import model.units.AbstractUnit;
  * @author Ignacio Slater Muñoz
  * @since 1.0
  */
-public class Spear extends AbstractItem {
+public class Spear extends AttackItem {
 
   /**
    * Creates a new Axe item
@@ -39,6 +39,4 @@ public class Spear extends AbstractItem {
       other.receiveSpearAttack(this);
   }
 
-  @Override
-  public void use(AbstractUnit other) { this.attack(other);}
 }

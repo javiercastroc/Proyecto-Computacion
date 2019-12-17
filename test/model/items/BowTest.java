@@ -150,8 +150,6 @@ public class BowTest extends AbstractTestItem {
     assertEquals(70, sorcererLuz.getCurrentHitPoints());
     assertEquals(70, sorcererOscuridad.getCurrentHitPoints());
     assertEquals(80, swordMaster.getCurrentHitPoints());
-    bow.heal(alpaca);
-    assertEquals(80, alpaca.getCurrentHitPoints());
   }
 
   /**

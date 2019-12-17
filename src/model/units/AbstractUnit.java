@@ -152,24 +152,25 @@ public abstract class AbstractUnit implements IUnit {
               && (this.getLocation().distanceTo(other.getLocation()) <= this.getEquippedItem().getMaxRange());}
       else return false; }
   @Override
-  public void attack(AbstractUnit other) {
+  public void attack(AbstractUnit other,AttackItem item) {
       int vidainicial = other.getCurrentHitPoints();
       if(getCurrentHitPoints()>0 && other.getCurrentHitPoints()>0){
-      if(getEquippedItem()!=null && isInRange(other)){
-        getEquippedItem().attack(other);
+      if(getEquippedItem()==item && isInRange(other)){
+        item.attack(other);
         if(other.getEquippedItem()!=null && other.getCurrentHitPoints()>0 && vidainicial>other.getCurrentHitPoints()){other.counterAttack(this);}}
   }}
 
   @Override
   public void counterAttack(AbstractUnit other) {
-      if(other.getEquippedItem()!=null && other.isInRange(this)){
-          getEquippedItem().attack(other);
+      if(this.getEquippedItem()!=null && other.isInRange(this)){
+          AttackItem attackItem=new AttackItem(this.getEquippedItem().getName(),getEquippedItem().getPower(),getEquippedItem().getMinRange(),getEquippedItem().getMaxRange());
+          attackItem.attack(other);
   }}
   @Override
-  public void heal(AbstractUnit other) {
+  public void heal(AbstractUnit other,HealItem item) {
       if(getCurrentHitPoints()>0 && other.getCurrentHitPoints()>0){
-      if(getEquippedItem()!=null && isInRange(other)){
-          getEquippedItem().heal(other); }}
+      if(getEquippedItem()==item && isInRange(other)){
+          item.heal(other); }}
   }
     /**
      * Receives damage from a normal attack.
@@ -232,10 +233,6 @@ public abstract class AbstractUnit implements IUnit {
         receiveAttack(attack);
     }
 
-    @Override
-    public void receiveStaffHeal(Staff attack){
-        receiveHeal(attack);
-    }
 
     @Override
     public void receiveSwordAttack(Sword attack){
@@ -286,7 +283,7 @@ public abstract class AbstractUnit implements IUnit {
      * Receives heal
      * @param attack item staff
      */
-  protected void receiveHeal(IEquipableItem attack){
+  public void receiveHeal(HealItem attack){
       if (getCurrentHitPoints() + attack.getPower()<=getMaxHitPoints()){
           this.currentHitPoints += attack.getPower();
       }

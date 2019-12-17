@@ -70,8 +70,16 @@ public abstract class AbstractItem implements IEquipableItem {
   public int getMaxRange() {
     return maxRange;
   }
+
   @Override
-  public void heal(AbstractUnit other) {}
+  public void use(AbstractUnit other) {}
+
+  @Override
+  public void counterAttack(AbstractUnit other){
+    if(this instanceof AttackItem){
+      AttackItem attackItem=new AttackItem(this.name,this.power,this.minRange,this.maxRange);
+      attackItem.attack(other);
+  }}
 
   @Override
   public void oscuridadVS(AbstractItem attack) { }
@@ -81,10 +89,5 @@ public abstract class AbstractItem implements IEquipableItem {
 
   @Override
   public void animaVS(AbstractItem attack) {}
-
-  @Override
-  public void attack(AbstractUnit other) { }
-
-  @Override
-  public void use(AbstractUnit other) {}
 }
+

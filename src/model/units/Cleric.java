@@ -32,10 +32,7 @@ public class Cleric extends AbstractUnit {
   public void equipStaff(final Staff staff) {equippedItem=staff;}
 
 
-  @Override
-  public void receiveStaffHeal(Staff attack) {
-    receiveHeal(attack);
-  }
+
 
   @Override
   public void receiveAnimaAttack(Anima attack) {
@@ -60,5 +57,5 @@ public class Cleric extends AbstractUnit {
     else receiveAttack(attack);
   }
   @Override
-  public void useItem(AbstractUnit other) {this.heal(other); }
+  public void useItem(AbstractUnit other)  {this.getEquippedItem().use(other); }
 }

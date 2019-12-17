@@ -84,7 +84,7 @@ public class StaffTest extends AbstractTestItem {
   }
 
   @Test
-  public void attackTest() {
+  public void healTest() {
     fighter=new Fighter(100, 5, new Location(0, 0));
     alpaca=new Alpaca(100, 5, new Location(0, 0));
     archer=new Archer(100, 5, new Location(0, 0));
@@ -118,15 +118,6 @@ public class StaffTest extends AbstractTestItem {
     sorcererLuz.equipItem(luz);
     sorcererAnima.equipItem(anima);
     sorcererOscuridad.equipItem(oscuridad);
-    staff.attack(alpaca);
-    staff.attack(archer);
-    staff.attack(cleric);
-    staff.attack(fighter);
-    staff.attack(hero);
-    staff.attack(sorcererAnima);
-    staff.attack(sorcererLuz);
-    staff.attack(sorcererOscuridad);
-    staff.attack(swordMaster);
     assertEquals(100, alpaca.getCurrentHitPoints());
     assertEquals(100, archer.getCurrentHitPoints());
     assertEquals(100, cleric.getCurrentHitPoints());
@@ -137,6 +128,7 @@ public class StaffTest extends AbstractTestItem {
     assertEquals(100, sorcererOscuridad.getCurrentHitPoints());
     assertEquals(100, swordMaster.getCurrentHitPoints());
     axes.attack(alpaca);
+    assertEquals(80, alpaca.getCurrentHitPoints());
     staff.heal(alpaca);
     assertEquals(100, alpaca.getCurrentHitPoints());
   }
@@ -163,7 +155,6 @@ public class StaffTest extends AbstractTestItem {
     Alpaca alpaca = new Alpaca(50, 2, field.getCell(1, 1));
     cleric.addItem(staff);
     cleric.equipItem(staff);
-    cleric.attack(alpaca);
     assertEquals(alpaca.getCurrentHitPoints(),50);
   }
 

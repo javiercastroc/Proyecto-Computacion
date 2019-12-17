@@ -87,7 +87,7 @@ public class Hero extends AbstractUnit {
   }
 
   @Override
-  public void useItem(AbstractUnit other) {this.attack(other); }
+  public void useItem(AbstractUnit other) {this.getEquippedItem().use(other); }
 
   @Override
   public void died() {

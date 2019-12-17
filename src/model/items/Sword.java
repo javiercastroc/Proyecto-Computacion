@@ -10,7 +10,7 @@ import model.units.AbstractUnit;
  * @author Ignacio Slater Muñoz
  * @since 1.0
  */
-public class Sword extends AbstractItem {
+public class Sword extends AttackItem {
 
   /**
    * Creates a new Sword.
@@ -38,6 +38,5 @@ public class Sword extends AbstractItem {
   public void attack(AbstractUnit other) {
     other.receiveSwordAttack(this);
   }
-@Override
-  public void use(AbstractUnit other) { this.attack(other);}
+
 }

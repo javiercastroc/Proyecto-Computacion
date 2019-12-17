@@ -125,7 +125,7 @@ public interface IUnit {
    * Attack other and causes a combat(counterAttack)
    * @param other Unit that receives the attack.
    */
-  void attack(AbstractUnit other);
+  void attack(AbstractUnit other,AttackItem item);
 
   /**
    * Counterattack if possible (item equipped)
@@ -137,7 +137,7 @@ public interface IUnit {
    * Heal other's Hitpoints if possible (staff equipped)
    * @param other Unit that receives healing.
    */
-  void heal(AbstractUnit other);
+  void heal(AbstractUnit other,HealItem item);
 
   /**
    * This unit receives an axe attack
@@ -161,7 +161,7 @@ public interface IUnit {
    * This unit receives a staff Healing
    * @param attack item: Staff
    */
-  void receiveStaffHeal(Staff attack);
+  void receiveHeal(HealItem attack);
 
   /**
    * This unit receives a sword attack

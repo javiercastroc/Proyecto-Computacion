@@ -10,7 +10,7 @@ import model.units.AbstractUnit;
  * @author Ignacio Slater Muñoz
  * @since 1.0
  */
-public class Anima extends AbstractItem {
+public class Anima extends AttackItem{
 
     /**
      * Creates a new Axe item
@@ -66,6 +66,4 @@ public class Anima extends AbstractItem {
         (this.getOwner()).normal(attack);
 }
 
-    @Override
-    public void use(AbstractUnit other) { this.attack(other);}
 }

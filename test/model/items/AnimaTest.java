@@ -134,8 +134,6 @@ class AnimaTest extends AbstractTestItem {
         assertEquals(70, sorcererLuz.getCurrentHitPoints());
         assertEquals(100, sorcererOscuridad.getCurrentHitPoints());
         assertEquals(70, swordMaster.getCurrentHitPoints());
-        anima.heal(alpaca);
-        assertEquals(80, alpaca.getCurrentHitPoints());
     }
 
     /**
@@ -147,7 +145,7 @@ class AnimaTest extends AbstractTestItem {
         Anima animas = new Anima("Animas", 20, 1, 5);
         sorc.addItem(animas);
         sorc.equipItem(animas);
-        sorc.attack(alpacaa);
+        sorc.useItem(alpacaa);
         assertEquals(sorc.getEquippedItem(),animas);
         assertTrue(sorc.getLocation().isNeighbour(alpacaa.getLocation()));
         assertEquals(alpacaa.getMaxHitPoints()-getExpectedBasePower(),alpacaa.getCurrentHitPoints());
@@ -180,32 +178,32 @@ class AnimaTest extends AbstractTestItem {
         this.oscuridad = new Oscuridad("Oscuridad", 20, 1, 2);
         sorcererAnima.addItem(anima);
         sorcererAnima.equipItem(anima);
-        sorcererAnima.attack(alpaca);
+        sorcererAnima.useItem(alpaca);
         assertEquals(sorcererAnima.getLocation().distanceTo(alpaca.getLocation()),1);
         assertTrue(sorcererAnima.isInRange(alpaca));
         assertEquals(80, alpaca.getCurrentHitPoints());
         assertEquals(100, sorcererAnima.getCurrentHitPoints());
-        sorcererAnima.attack(archer);
+        sorcererAnima.useItem(archer);
         assertEquals(80, archer.getCurrentHitPoints());
         assertEquals(100, sorcererAnima.getCurrentHitPoints());
-        sorcererAnima.attack(cleric);
+        sorcererAnima.useItem(cleric);
         assertEquals(80, cleric.getCurrentHitPoints());
         assertEquals(100, sorcererAnima.getCurrentHitPoints());
-        sorcererAnima.attack(fighter);
+        sorcererAnima.useItem(fighter);
         assertEquals(80, fighter.getCurrentHitPoints());
         assertEquals(100, sorcererAnima.getCurrentHitPoints());
-        sorcererAnima.attack(hero);
+        sorcererAnima.useItem(hero);
         assertEquals(80, hero.getCurrentHitPoints());
         assertEquals(100, sorcererAnima.getCurrentHitPoints());
-        sorcererAnima.attack(sorcererAnima);
+        sorcererAnima.useItem(sorcererAnima);
         assertEquals(100, sorcererAnima.getCurrentHitPoints());
-        sorcererAnima.attack(sorcererLuz);
+        sorcererAnima.useItem(sorcererLuz);
         assertEquals(80, sorcererLuz.getCurrentHitPoints());
         assertEquals(100, sorcererAnima.getCurrentHitPoints());
-        sorcererAnima.attack(sorcererOscuridad);
+        sorcererAnima.useItem(sorcererOscuridad);
         assertEquals(80, sorcererOscuridad.getCurrentHitPoints());
         assertEquals(100, sorcererAnima.getCurrentHitPoints());
-        sorcererAnima.attack(swordMaster);
+        sorcererAnima.useItem(swordMaster);
         assertEquals(80, swordMaster.getCurrentHitPoints());
         assertEquals(100, sorcererAnima.getCurrentHitPoints());
     }
